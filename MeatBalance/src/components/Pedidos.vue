@@ -34,6 +34,7 @@
               <v-sheet
                 min-height="70vh"
                 rounded="lg"
+                class="pa-5"
               >
                 <!--  -->
                 <keep-alive>
@@ -48,10 +49,11 @@
   
   <script>
   import TablaVue from './Tabla.vue';
+  import CrearPedidoVue from './CrearPedido.vue';
     export default {
       data: () => ({
         Opciones:[
-          {title:'Crear Pedido',component:''},
+          {title:'Crear Pedido',component:'CrearPedidoVue'},
           {title:'Listar Pedidos',component:'TablaVue'}
         ],
         current:'TablaVue'
@@ -62,7 +64,8 @@
         }
       },
       components:{
-        TablaVue
+        TablaVue,
+        CrearPedidoVue
       }
     }
   </script>
