@@ -68,18 +68,6 @@ export default{
             name: 'Eclair',
             calories: 262,
           },
-          {
-            name: 'Cupcake',
-            calories: 305,
-          },
-          {
-            name: 'Gingerbread',
-            calories: 356,
-          },
-          {
-            name: 'Jelly bean',
-            calories: 375,
-          },
         ],
       }
     },
