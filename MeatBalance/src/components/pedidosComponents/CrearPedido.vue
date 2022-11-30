@@ -12,7 +12,7 @@
     
           <v-text-field
             v-model="number"
-            :rules="NumberRules"
+            :rules="numberRules"
             label="Cantidad"
             required
             min="1"
@@ -37,14 +37,13 @@
       ],
       select: null,
       items: ["Item 1", "Item 2", "Item 3", "Item 4"],
-      checkbox: false,
     }),
   
     methods: {
       async validate() {
         const { valid } = await this.$refs.form.validate();
   
-        if (valid) alert("Datos del formulario validos");
+        if (valid) alert("Pedido registrado");
       },
       reset() {
         this.$refs.form.reset();

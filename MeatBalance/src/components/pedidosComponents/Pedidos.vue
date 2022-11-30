@@ -48,8 +48,8 @@
   </template>
   
   <script>
-  import TablaVue from './Tabla.vue';
-  import CrearPedidoVue from './CrearPedido.vue';
+  import TablaVue from '../Tabla.vue';
+  import CrearPedidoVue from '../pedidosComponents/CrearPedido.vue';
     export default {
       data: () => ({
         Opciones:[

@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import Pedidos from '../components/Pedidos.vue'
-import Proveedores from '../components/Proveedores.vue'
+import Pedidos from '../components/pedidosComponents/Pedidos.vue'
+import Proveedores from '../components/proveedoresComponents/Proveedores.vue'
+import Productos from '../components/productosComponents/Productos.vue'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -13,6 +14,10 @@ const router = createRouter({
         {
             path:'/Proveedores',
             component:Proveedores
+        },
+        {
+            path:'/Productos',
+            component:Productos
         }
     ]
 })

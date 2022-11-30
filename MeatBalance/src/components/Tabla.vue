@@ -2,8 +2,8 @@
   <v-table fixed-header height="auto">
     <thead>
       <tr>
-        <th class="text-left">Name</th>
-        <th class="text-left">Calories</th>
+        <th class="text-left text-button">Name</th>
+        <th class="text-left text-button">Calories</th>
       </tr>
     </thead>
     <tbody>
