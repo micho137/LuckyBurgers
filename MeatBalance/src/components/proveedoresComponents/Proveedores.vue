@@ -18,7 +18,7 @@
 
               <v-divider class="my-2"></v-divider>
 
-              <v-list-item link color="grey-lighten-4">
+              <v-list-item v-on:click="reload()" link color="grey-lighten-4">
                 <v-list-item-title> Refresh </v-list-item-title>
               </v-list-item>
             </v-list>
@@ -53,6 +53,9 @@ export default {
     changeCurrent(component) {
       this.current = component;
     },
+    reload(){
+      location.reload()
+    }
   },
   components: {
     TablaProveedoresVue,

@@ -71,6 +71,7 @@ export default {
     numberRules: [(v) => !!v || "Cantidad es requerida"],
     select: "",
     items: ["Item 1", "Item 2", "Item 3", "Item 4"],
+    
   }),
 
   methods: {
@@ -102,31 +103,6 @@ export default {
       if (pedido) {
         this.$swal(`You selected: ${pedido}`);
       }
-    },
-    tipoPedido() {
-      this.$swal({
-        title: "Confirmar pedido",
-        showDenyButton: true,
-        confirmButtonText: "Confirmar",
-        denyButtonText: `Cancelar`,
-      }).then((result) => {
-        /* Read more about isConfirmed, isDenied below */
-        if (result.isConfirmed) {
-          this.$swal({
-            icon: "success",
-            title: "Pedido registrado exitosamente",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        } else if (result.isDenied) {
-          this.$swal({
-            icon: "info",
-            title: "Los cambios no fueron guardados",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
-      });
     },
     async validate() {
       const { valid } = await this.$refs.form.validate();

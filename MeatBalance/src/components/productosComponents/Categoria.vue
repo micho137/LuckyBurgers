@@ -4,50 +4,21 @@
       <v-row class="d-flex flex-column align-center">
         <v-col cols="12" md="4">
           <v-text-field
-            v-model="nombreProducto"
-            :rules="nameRules"
-            label="Nombre del producto"
+            v-model="nombreCategoria"
+            :rules="categoriaRules"
+            label="Nombre de la categoria"
             required
           ></v-text-field>
         </v-col>
-
         <v-col cols="12" md="4">
-          <v-text-field
+          <v-textarea
+            no-resize=""
             v-model="descripcion"
             :rules="descripcionRules"
             label="Descripcion"
             required
-          ></v-text-field>
-        </v-col>
-
-        <v-col cols="12" md="4">
-          <v-text-field
-            v-model="precio"
-            :rules="precioRules"
-            label="Precio"
-            required
-          ></v-text-field>
-        </v-col>
-
-        <v-col cols="12" md="4">
-          <v-select
-            v-model="categoria"
-            :rules="precioRules"
-            label="Categoria"
-            required
           >
-          </v-select>
-        </v-col>
-
-        <v-col cols="12" md="4" class="">
-          <v-file-input
-            persistent-hint
-            hint="Formatos permitidos: .png .jpeg .bmp"
-            accept="image/png, image/jpeg, image/bmp"
-            chips
-            clearable
-            label="Seleccione la imagen del producto"
-          ></v-file-input>
+          </v-textarea>
         </v-col>
       </v-row>
       <div class="d-flex justify-center mt-6">
@@ -63,15 +34,14 @@
 
 <script>
 import axios from "axios";
+
 export default {
   data: () => ({
     valid: true,
-    nombreProducto: "",
-    nameRules: [(v) => !!v || "El nombre es requerido"],
+    nombreCategoria: "",
+    categoriaRules: [(v) => !!v || "La categoria es requerida"],
     descripcion: "",
     descripcionRules: [(v) => !!v || "La descripcion es requerida"],
-    precio: "",
-    precioRules: [(v) => !!v || "El precio es requerido"],
   }),
   methods: {
     failed() {
@@ -85,7 +55,7 @@ export default {
       this.$swal({
         position: "top-end",
         icon: "success",
-        title: "Producto registrado exitosamente",
+        title: "Categoria registrada exitosamente",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -93,8 +63,15 @@ export default {
     async validate() {
       const { valid } = await this.$refs.form.validate();
       if (valid) {
-        this.showRegisterAlert();
-        this.reset();
+        await axios
+          .post("http://localhost:4000/crear/categorias", {
+            nombreCategoria: this.nombreCategoria,
+            descripcion: this.descripcion,
+          })
+          .then((Response) => {
+            this.showRegisterAlert();
+            this.reset();
+          });
       } else {
         /* this.failed(); */
       }
@@ -103,18 +80,6 @@ export default {
     reset() {
       this.$refs.form.reset();
     },
-    getCategorias() {
-      axios
-        .get("http://localhost:4000/categorias")
-        .then((response) => {
-          console.log(response);
-          this.Categorias = response.data;
-        })
-        .catch((t) => console.log(t));
-    },
-  },
-  mounted() {
-    this.getCategorias();
   },
 };
 </script>

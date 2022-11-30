@@ -41,11 +41,13 @@
 <script>
 import RegistrarProductoVue from "./RegistrarProducto.vue";
 import TablaProductosVue from "./TablaProductos.vue";
+import CategoriaVue from "./Categoria.vue";
 export default {
   data: () => ({
     Opciones: [
       { title: "Registar Productos", component: "RegistrarProductoVue" },
       { title: "Listar Productos", component: "TablaProductosVue" },
+      {title: "Registrar Categoria Producto", component:"CategoriaVue"}
     ],
     current: "TablaProductosVue",
   }),
@@ -57,6 +59,7 @@ export default {
   components: {
     TablaProductosVue,
     RegistrarProductoVue,
+    CategoriaVue,
   },
 };
 </script>

@@ -3,48 +3,24 @@
     <v-container>
       <v-row class="d-flex flex-column align-center">
         <v-col cols="12" md="4">
-          <v-text-field
-            v-model="nombreProveedor"
-            :rules="nameRules"
-            label="Nombre del proveedor"
-            required
-          ></v-text-field>
+          <v-text-field v-model="nombreProveedor" :rules="nameRules" label="Nombre del proveedor"
+            required></v-text-field>
         </v-col>
 
         <v-col cols="12" md="4">
-          <v-text-field
-            v-model="descripcion"
-            :rules="descripcionRules"
-            label="Descripcion"
-            required
-          ></v-text-field>
+          <v-text-field v-model="descripcion" :rules="descripcionRules" label="Descripcion" required></v-text-field>
         </v-col>
 
         <v-col cols="12" md="4">
-          <v-text-field
-            v-model="nit"
-            :rules="nitRules"
-            label="NIT"
-            required
-          ></v-text-field>
+          <v-text-field v-model="nit" :rules="nitRules" label="NIT" required></v-text-field>
         </v-col>
 
         <v-col cols="12" md="4">
-          <v-text-field
-            v-model="direccion"
-            :rules="direccionRules"
-            label="Direccion"
-            required
-          ></v-text-field>
+          <v-text-field v-model="direccion" :rules="direccionRules" label="Direccion" required></v-text-field>
         </v-col>
 
         <v-col cols="12" md="4">
-          <v-text-field
-            v-model="contacto"
-            :rules="contactoRules"
-            label="Contacto"
-            required
-          ></v-text-field>
+          <v-text-field v-model="contacto" :rules="contactoRules" label="Contacto" required></v-text-field>
         </v-col>
         <div class="d-flex justify-center">
           <v-btn color="blue-grey" class="mr-4" @click="validate">
@@ -59,8 +35,10 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data: () => ({
+    Proveedores: null,
     valid: true,
     nombreProveedor: "",
     nameRules: [(v) => !!v || "El nombre es requerido"],
@@ -78,7 +56,9 @@ export default {
       this.$swal({
         icon: "error",
         title: "Oops...",
-        text: "Algo no ha salido bien",
+        text: "Debes llenar todos los datos",
+        timer: 1500,
+        showConfirmButton: false
       });
     },
     showRegisterAlert() {
@@ -90,11 +70,34 @@ export default {
         timer: 1500,
       });
     },
+    showConditionAlert() {
+      this.$swal({
+        title: 'Do you want to save the changes?',
+        showDenyButton: true,
+        confirmButtonText: 'Si',
+        denyButtonText: `No`,
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          Swal.fire('Saved!', '', 'success')
+        } else if (result.isDenied) {
+          Swal.fire('Changes are not saved', '', 'info')
+        }
+      })
+    },
     async validate() {
       const { valid } = await this.$refs.form.validate();
       if (valid) {
-        this.showRegisterAlert();
-        this.reset()
+        await axios.post(`http://localhost:4000/crear/proveedores`, {
+          nombreProveedor: this.nombreProveedor,
+          descripcion: this.descripcion,
+          NIT: this.nit,
+          direccionProveedor: this.direccion,
+          contacto: this.contacto
+        }).then((Response) => {
+          this.showRegisterAlert();
+          this.reset()
+        })
       } else {
         this.failed()
       }
@@ -103,6 +106,7 @@ export default {
     reset() {
       this.$refs.form.reset();
     },
+
   },
 };
 </script>
