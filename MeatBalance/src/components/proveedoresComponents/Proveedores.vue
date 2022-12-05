@@ -1,5 +1,5 @@
 <template>
-  <v-main class="bg-grey-lighten-3 h-100">
+  <v-main class="h-100">
     <v-container>
       <v-row>
         <v-col cols="2">
@@ -52,6 +52,9 @@ export default {
   methods: {
     changeCurrent(component) {
       this.current = component;
+      if(component==="TablaProveedoresVue"){
+        this.reload()
+      }
     },
     reload(){
       location.reload()

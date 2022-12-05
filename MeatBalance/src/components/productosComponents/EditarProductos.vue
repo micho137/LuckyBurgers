@@ -67,11 +67,11 @@
         </v-col>
       </v-row>
       <div class="d-flex justify-center mt-6">
-        <v-btn color="blue-grey" class="mr-4" @click="validate">
+        <v-btn color="blue-grey" class="mr-4" @click="editar">
           Registrar
         </v-btn>
         <v-btn color="grey" class="mr-4" @click="reset"> Reset Form </v-btn>
-        <v-btn color="grey" class="mr-4" @click="probar">Si</v-btn>
+        <v-btn color="grey" class="mr-4" @click="goTable"> Cancelar </v-btn>
       </div>
     </v-container>
   </v-form>
@@ -84,19 +84,17 @@ import axios from "axios";
 export default {
   data: () => ({
     Category: [],
-    categoriaProducto: "",
-    archivo: "",
-    nombreProducto: "",
-    descripcion: "",
-    precio: "",
-    archivoPreview: "",
     valid: true,
     nameRules: [(v) => !!v || "El nombre es requerido"],
     descripcionRules: [(v) => !!v || "La descripcion es requerida"],
     precioRules: [(v) => !!v || "El precio es requerido"],
     archivoRules: [(v) => !!v || "Debe seleccionar una imagen del producto"],
   }),
+
   methods: {
+    goTable(){
+      this.$router.push("Productos")
+    },
     failed() {
       this.$swal({
         icon: "error",
@@ -108,32 +106,35 @@ export default {
       this.$swal({
         position: "top-end",
         icon: "success",
-        title: "Producto registrado exitosamente",
+        title: "El producto se edito con exito",
         showConfirmButton: false,
         timer: 1500,
       });
     },
-    async validate() {
+    async editar() {
       const { valid } = await this.$refs.form.validate();
       if (valid) {
         let data = new FormData();
-        var file = this.archivo[0]
+        var file = this.archivo[0];
         data.append("nombreProducto", this.nombreProducto);
-        data.append("descripcionProducto", this.descripcion);
+        data.append("Descripcion", this.descripcion);
+        data.append("Stock", 0);
         data.append("precio", this.precio);
-        data.append("archivo",file);
+        data.append("archivo", file);
         data.append("categoria", this.categoriaProducto);
         await axios
-          .post("http://localhost:4000/crear/productos", data, {
+          .put("http://localhost:4000/editar/producto/"+this.uid, data, {
             headers: {
               "accept": "application/json",
               "Content-Type": `multipart/form-data`,
             },
           })
           .then((response) => {
+            this.request = response.status
             this.showRegisterAlert();
-
-          }).catch((e)=> this.failed())
+            this.goTable()
+          })
+          .catch((t) => this.failed());
       }
     },
     reset() {
@@ -168,6 +169,7 @@ export default {
         .catch((t) => console.log(t));
     },
   },
+
   mounted() {
     this.getCategorias();
   },

@@ -1,5 +1,5 @@
 <template>
-      <v-main class="bg-grey-lighten-3 h-100">
+      <v-main class="h-100">
         <v-container>
           <v-row>
             <v-col cols="2">

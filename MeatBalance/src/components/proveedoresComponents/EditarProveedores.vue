@@ -52,17 +52,17 @@
           </v-btn>
 
           <v-btn color="grey" class="mr-4" @click="reset"> Reset Form </v-btn>
+          <v-btn color="grey" class="mr-4" @click="goTable"> Cancel </v-btn>
         </div>
       </v-row>
     </v-container>
   </v-form>
 </template>
-
-<script>
+  
+  <script>
 import axios from "axios";
 export default {
   data: () => ({
-    Proveedores: null,
     valid: true,
     nombreProveedor: "",
     nameRules: [(v) => !!v || "El nombre es requerido"],
@@ -76,6 +76,9 @@ export default {
     contactoRules: [(v) => !!v || "El contacto es requerido"],
   }),
   methods: {
+    goTable(){
+        this.$router.push('Proveedores')
+    },
     failed() {
       this.$swal({
         icon: "error",
@@ -92,21 +95,6 @@ export default {
         title: "Proveedor registrado exitosamente",
         showConfirmButton: false,
         timer: 1500,
-      });
-    },
-    showConditionAlert() {
-      this.$swal({
-        title: "Do you want to save the changes?",
-        showDenyButton: true,
-        confirmButtonText: "Si",
-        denyButtonText: `No`,
-      }).then((result) => {
-        /* Read more about isConfirmed, isDenied below */
-        if (result.isConfirmed) {
-          Swal.fire("Saved!", "", "success");
-        } else if (result.isDenied) {
-          Swal.fire("Changes are not saved", "", "info");
-        }
       });
     },
     async validate() {
