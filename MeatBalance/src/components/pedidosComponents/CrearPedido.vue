@@ -8,10 +8,13 @@
               <v-autocomplete
                 transition="scroll-x-transition"
                 v-model="select"
-                :items="items"
+                :items="Productos"
+                item-value="[precio, nombreProducto, uid]"
+                item-title="nombreProducto"
                 label="Selecionar Producto"
                 :rules="[(v) => !!v || 'El producto es requerido']"
                 required
+                return-object
               ></v-autocomplete>
 
               <v-text-field
@@ -25,7 +28,7 @@
             </div>
 
             <div class="mt-4 d-flex justify-center">
-              <v-btn class="mr-2" color="primary" @click="validate">
+              <v-btn class="mr-2" color="primary" @click="add">
                 Agregar
                 <v-icon end icon="mdi-plus-box"></v-icon>
               </v-btn>
@@ -41,19 +44,19 @@
       <v-col>
         <!-- ESPACIO -->
         <v-sheet>
-          <tabla-vue />
+          <tabla-vue :Check="activate" :Productos="pedidos" />
         </v-sheet>
         <!-- ESPACIO -->
         <v-col class="d-flex justify-space-around border rounded-lg pa-2 mt-4">
-          <div class="d-flex">
+          <div v-if="onSuccess" class="d-flex">
             <v-btn color="success" class="mr-4" @click="prueba()">
               Enviar Pedido
             </v-btn>
-            <!-- <v-btn color="error"> Cancelar </v-btn> -->
+            <v-btn @click="cleanTable" color="error"> Limpiar Tabla </v-btn>
           </div>
           <div class="">
             <v-sheet class="text-button font-weight-bold">
-              Total: {{ items[1] }}
+              Total: ${{ getTotal }}
             </v-sheet>
           </div>
         </v-col>
@@ -63,51 +66,128 @@
 </template>
   
 <script>
+import axios from "axios";
 import TablaVue from "../pedidosComponents/TablaPedido.vue";
 export default {
+  computed: {
+    getTotal() {
+      let total = 0;
+      this.pedidos.forEach((e) => {
+        total += e.precio;
+      });
+      return total;
+    },
+  },
   data: () => ({
     valid: true,
+    onSuccess:false,
+    onClean:false,
+    datos:[],
+    Productos: [],
+    pedidos: [],
     number: "",
     numberRules: [(v) => !!v || "Cantidad es requerida"],
     select: "",
-    items: ["Item 1", "Item 2", "Item 3", "Item 4"],
-    
   }),
-
   methods: {
+    cleanTable() {
+      this.pedidos = [];
+      if ((this.onSuccess = true)) {
+        this.onSuccess = false;
+      }
+    },
+    activate() {
+      if (this.pedidos.length > 0) {
+        this.onSuccess = true;
+      }else{
+        this.onSuccess=false
+      }
+    },
+    failed() {
+      this.$swal({
+        icon: "error",
+        title: "Oops...",
+        text: "Algo no ha salido bien",
+      });
+    },
+    showRegisterAlert() {
+      this.$swal({
+        position: "top-end",
+        icon: "success",
+        title: "Pedido registrado exitosamente",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    },
     async prueba() {
-      const { value: pedido } = await this.$swal({
-        title: "Select field validation",
+        await this.$swal({
+        title: "Selecciona el tipo de pedido",
         input: "select",
         inputOptions: {
-          Fruits: {
-            apples: "Apples",
-            bananas: "Bananas",
-            grapes: "Grapes",
-            oranges: "Oranges",
-          },
+          Local: "Local",
+          Domicilio: "Domicilio",
         },
-        inputPlaceholder: "Seleccione el tipo de pedido",
+        inputPlaceholder: "Tipo de pedido",
         showCancelButton: true,
         inputValidator: (value) => {
           return new Promise((resolve) => {
-            if (value === "oranges") {
-              resolve();
+            if (value === "Local") {
+              resolve(
+                this.validate(value)
+              );
             } else {
-              resolve("You need to select oranges :)");
+              value = "Domicilio";
+              this.validate(value);
             }
           });
         },
       });
-
-      if (pedido) {
-        this.$swal(`You selected: ${pedido}`);
-      }
     },
-    async validate() {
+    async validate(value) {
+      axios
+        .post("http://localhost:4000/crearPedido", {
+          pedido:[
+            {
+              total:this.getTotal,
+              tipoPedido:value
+            },
+            this.pedidos.map((pedido)=>{
+              return {
+                producto:pedido.uid,
+                precio:pedido.precio,
+                cantidad:pedido.cantidad
+              }
+            })
+          ]
+        })
+        .then(() => {
+          this.showRegisterAlert();
+          this.cleanTable()
+        })
+        .catch((e) => {
+          this.failed()
+        });
+    },
+    getProductos() {
+      axios
+        .get("http://localhost:4000/productos")
+        .then((response) => {
+          this.Productos = response.data["resp"][1];
+        })
+        .catch((t) => console.log(t));
+    },
+    async add() {
       const { valid } = await this.$refs.form.validate();
-
-      if (valid) alert("Pedido registrado");
+      if (valid) {
+        this.pedidos.push({
+          producto: this.select.nombreProducto,
+          cantidad: this.number,
+          precio: this.select.precio * this.number,
+          uid:this.select.uid
+        });
+        this.reset();
+        this.activate()
+      }
     },
     reset() {
       this.$refs.form.reset();
@@ -115,6 +195,9 @@ export default {
   },
   components: {
     TablaVue,
+  },
+  mounted() {
+    this.getProductos();
   },
 };
 </script>

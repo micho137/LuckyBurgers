@@ -2,74 +2,53 @@
   <v-table fixed-header height="auto">
     <thead>
       <tr>
-        <th class="text-left text-button">Name</th>
-        <th class="text-left text-button">Calories</th>
+        <th class="text-left text-button">Descripcion</th>
+        <th class="text-left text-button">Tipo Pedido</th>
+        <th class="text-left text-button">Total</th>
+        <th class="text-left text-button">Fecha Ingreso</th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="item in desserts" :key="item.name">
-        <td>{{ item.name }}</td>
-        <td>{{ item.calories }}</td>
+      <tr
+        v-for="{
+          descripcionIngreso,
+          uid,
+          venta,
+          totalIngreso,
+          fechaIngreso,
+        } in Pedidos"
+        :key="uid"
+      >
+        <td>{{ descripcionIngreso }}</td>
+        <td>{{ venta.tipoPedido }}</td>
+        <td>${{ totalIngreso }}</td>
+        <td>{{ new Date(fechaIngreso).toLocaleDateString() }} - {{new Date(fechaIngreso).toLocaleTimeString()}}</td>
       </tr>
     </tbody>
   </v-table>
 </template>
 
 <script>
-export default{
-    data () {
-      return {
-        desserts: [
-          {
-            name: 'Frozen Yogurt',
-            calories: 159,
-          },
-          {
-            name: 'Ice cream sandwich',
-            calories: 237,
-          },
-          {
-            name: 'Eclair',
-            calories: 262,
-          },
-          {
-            name: 'Cupcake',
-            calories: 305,
-          },
-          {
-            name: 'Gingerbread',
-            calories: 356,
-          },
-          {
-            name: 'Jelly bean',
-            calories: 375,
-          },
-          {
-            name: 'Lollipop',
-            calories: 392,
-          },
-          {
-            name: 'Honeycomb',
-            calories: 408,
-          },
-          {
-            name: 'Donut',
-            calories: 452,
-          },
-          {
-            name: 'KitKat',
-            calories: 518,
-          },
-          {
-            name: 'Ice cream sandwich',
-            calories: 237,
-          },
-          {
-            name: 'Eclair',
-            calories: 262,
-          },
-        ],
-      }
+import axios from "axios";
+export default {
+  data() {
+    return {
+      Pedidos: null,
+    };
+  },
+  methods: {
+    getPedidos() {
+      axios
+        .get("http://localhost:4000/obtenerPedidos")
+        .then((response) => {
+          console.log(response);
+          this.Pedidos = response.data["ingresos"]
+        })
+        .catch((t) => console.log(t));
     },
-}
+  },
+  mounted() {
+    this.getPedidos();
+  },
+};
 </script>

@@ -5,21 +5,25 @@
           <th class="text-center text-button">Producto</th>
           <th class="text-center text-button">Cantidad</th>
           <th class="text-center text-button">Precio</th>
+          <th class="text-center text-button">Proveedor</th>
           <th class="text-center text-button">Accion</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="{producto,cantidad,precio,uid} in Productos" :key="uid" class="text-center">
+        <tr v-for="{producto,cantidad,precioCompra,proveedor,uid,uidProveedor} in Proveedores" :key="uid" class="text-center">
           <td>{{ producto }}</td>
           
           <td>{{ cantidad }}</td>
           
-          <td>${{ precio }}</td>
+          <td>${{ precioCompra }}</td>
+
+          <td>{{ proveedor }}</td>
           <td>
           <div class="d-flex justify-center">
             <v-btn color="grey" @click="deletes(uid)" > Eliminar </v-btn>
           </div>
         </td>
+        <td v-if="off">{{uidProveedor}}</td>
         </tr>
       </tbody>
     </v-table>
@@ -29,15 +33,16 @@
   export default{
       data () {
         return {
+          off:false
         }
       },
       props:{
-        Productos:[],
+        Proveedores:[],
         Check:Function
       },
       methods:{
         deletes(uid){
-          this.Productos.splice(uid,1)
+          this.Proveedores.splice(uid,1)
           this.Check()
         }
       }

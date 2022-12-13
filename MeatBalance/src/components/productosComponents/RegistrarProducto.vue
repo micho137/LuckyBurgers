@@ -25,6 +25,7 @@
             v-model="precio"
             :rules="precioRules"
             label="Precio"
+            prefix="$"
             required
           ></v-text-field>
         </v-col>
@@ -37,6 +38,17 @@
             item-title="nombreCategoria"
             :items="Category"
             label="Categoria"
+            required
+          >
+          </v-select>
+        </v-col>
+
+        <v-col cols="12" md="4">
+          <v-select
+            v-model="tipoProducto"
+            :rules="tipoRules"
+            :items="tProducto"
+            label="Tipo de Producto"
             required
           >
           </v-select>
@@ -71,7 +83,6 @@
           Registrar
         </v-btn>
         <v-btn color="grey" class="mr-4" @click="reset"> Reset Form </v-btn>
-        <v-btn color="grey" class="mr-4" @click="probar">Si</v-btn>
       </div>
     </v-container>
   </v-form>
@@ -84,17 +95,19 @@ import axios from "axios";
 export default {
   data: () => ({
     Category: [],
+    tProducto:["Inventario","Venta"],
     categoriaProducto: "",
     archivo: "",
     nombreProducto: "",
     descripcion: "",
     precio: "",
     archivoPreview: "",
+    tipoProducto: "",
     valid: true,
     nameRules: [(v) => !!v || "El nombre es requerido"],
+    tipoRules: [(v) => !!v || "El tipo de producto es requerido"],
     descripcionRules: [(v) => !!v || "La descripcion es requerida"],
     precioRules: [(v) => !!v || "El precio es requerido"],
-    archivoRules: [(v) => !!v || "Debe seleccionar una imagen del producto"],
   }),
   methods: {
     failed() {
@@ -123,6 +136,7 @@ export default {
         data.append("precio", this.precio);
         data.append("archivo",file);
         data.append("categoria", this.categoriaProducto);
+        data.append("tipoProducto",this.tipoProducto)
         await axios
           .post("http://localhost:4000/crear/productos", data, {
             headers: {
@@ -132,12 +146,20 @@ export default {
           })
           .then((response) => {
             this.showRegisterAlert();
+            this.resetNoFile()
 
           }).catch((e)=> this.failed())
       }
     },
     reset() {
       this.$refs.form.reset();
+    },
+    resetNoFile(){
+      this.nombreProducto='',
+      this.categoriaProducto='',
+      this.descripcion='',
+      this.precio='',
+      this.tipoProducto=''
     },
     async selectImage(a) {
       const file = a.target.files[0];

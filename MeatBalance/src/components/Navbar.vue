@@ -25,7 +25,7 @@
 export default {
   data: () => ({
     links: [
-      { title: "Pedidos", route: "/" },
+      { title: "Pedidos", route: "/Pedidos" },
       { title: "Proveedores", route: "/Proveedores" },
       { title: "Productos", route: "/Productos" },
       { title: "Monetarios", route: "/Monetarios" },

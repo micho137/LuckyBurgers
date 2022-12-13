@@ -11,4 +11,6 @@
 
 <script setup>
 import NavbarVue from './components/Navbar.vue';
+import { useLoginStore } from './stores/LoginStore';
+useLoginStore()
 </script>

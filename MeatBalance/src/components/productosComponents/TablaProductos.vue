@@ -4,8 +4,8 @@
       <tr>
         <th class="text-center text-button">Producto</th>
         <th class="text-center text-button">Descripcion</th>
-        <th class="text-center text-button">Stock</th>
         <th class="text-center text-button">Categoria</th>
+        <th class="text-center text-button">Tipo Producto</th>
         <th class="text-center text-button">Precio</th>
         <th class="text-center text-button">Imagen</th>
         <th class="text-center text-button">Accion</th>
@@ -16,8 +16,8 @@
         v-for="{
           nombreProducto,
           descripcionProducto,
-          stock,
           categoria,
+          tipoProducto,
           precio,
           imgProducto,
           uid
@@ -26,9 +26,9 @@
       >
         <td>{{ nombreProducto }}</td>
         <td>{{ descripcionProducto }}</td>
-        <td>{{ stock }}</td>
         <td>{{ categoria.nombreCategoria }}</td>
-        <td>{{ precio }}</td>
+        <td>{{ tipoProducto }}</td>
+        <td>${{ precio }}</td>
         <td><v-img lazy-src="https://res.cloudinary.com/djdxi88e0/image/upload/v1670184495/meatbalance_lqntpv.png" :src="imgProducto"> </v-img></td>
         <td>
           <div class="d-flex justify-center">
