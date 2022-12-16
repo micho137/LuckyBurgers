@@ -11,22 +11,41 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="proveedor in Proveedores" :key="proveedor.uid">
-        <td>{{ proveedor.nombreProveedor }}</td>
-        <td>{{ proveedor.descripcion }}</td>
-        <td>{{ proveedor.NIT }}</td>
-        <td>{{ proveedor.direccionProveedor }}</td>
-        <td>{{ proveedor.contacto }}</td>
+      <tr
+        v-for="{
+          nombreProveedor,
+          descripcion,
+          NIT,
+          uidProveedor,
+          direccionProveedor,
+          contacto,
+        } in Proveedores"
+        :key="uidProveedor"
+      >
+        <td>{{ nombreProveedor }}</td>
+        <td>{{ descripcion }}</td>
+        <td>{{ NIT }}</td>
+        <td>{{ direccionProveedor }}</td>
+        <td>{{ contacto }}</td>
         <td>
           <div class="d-flex justify-center">
-            <v-btn color="comoNaranja" class="mr-4" @click="goEdit">
+            <v-btn
+              color="comoNaranja"
+              class="mr-4"
+              @click="
+                showEditAlert(
+                  uidProveedor,
+                  nombreProveedor,
+                  descripcion,
+                  NIT,
+                  direccionProveedor,
+                  contacto
+                )
+              "
+            >
               Editar
             </v-btn>
-            <v-btn
-              color="grey"
-              class=""
-              @click="showDeleteAlert(proveedor.uid)"
-            >
+            <v-btn color="grey" class="" @click="showDeleteAlert(uidProveedor)">
               Eliminar
             </v-btn>
           </div>
@@ -45,9 +64,6 @@ export default {
     };
   },
   methods: {
-    goEdit() {
-      this.$router.push("EditarProveedor");
-    },
     getProveedores() {
       axios
         .get("http://localhost:4000/proveedores")
@@ -70,14 +86,101 @@ export default {
         text: "No podrás revertirlo!",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
+        confirmButtonColor: "#FC6C4C",
+        cancelButtonColor: "#a2a2a2",
         confirmButtonText: "Sí, quiero borrarlo!",
       }).then((result) => {
         if (result.isConfirmed) {
           this.deleteProveedor(id);
           this.$swal("Eliminado!", "El registro ha sido borrado", "success");
         }
+      });
+    },
+    showDone() {
+      this.$swal({
+        icon: "success",
+        title: "Proveedor editado con exito",
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1000,
+        timerProgressBar: true,
+      });
+    },
+    failed() {
+      this.$swal({
+        icon: "error",
+        title: "Oops...",
+        text: "Debes llenar todos los datos",
+        showConfirmButton: true,
+      });
+    },
+    showEditAlert(
+      uidProveedor,
+      nombreProveedor,
+      descripcion,
+      NIT,
+      direccionProveedor,
+      contacto
+    ) {
+      const data = {
+        uidProveedor,
+        nombreProveedor,
+        descripcion,
+        NIT,
+        direccionProveedor,
+        contacto,
+      };
+      this.$swal({
+        title: "Editar proveedor",
+        html:
+          `<input value='${data.nombreProveedor}' placeholder="Nombre Proveedor" id="swal-input1" class="swal2-input">` +
+          `<input value='${data.descripcion}' placeholder="Descripcion" id="swal-input2" class="swal2-input">` +
+          `<input value='${data.NIT}' placeholder="NIT" id="swal-input3" class="swal2-input">` +
+          `<input value='${data.direccionProveedor}' placeholder="Direccion" id="swal-input4" class="swal2-input">` +
+          `<input value='${data.contacto}' placeholder="Contacto" id="swal-input5" class="swal2-input">`,
+        showCancelButton: true,
+        focusConfirm: false,
+        confirmButtonText: "Editar",
+        confirmButtonColor: "#FC6C4C",
+        preConfirm: () => {
+          if (
+            document.getElementById("swal-input1").value === "" ||
+            document.getElementById("swal-input2").value === "" ||
+            document.getElementById("swal-input3").value === "" ||
+            document.getElementById("swal-input4").value === "" ||
+            document.getElementById("swal-input5").value === ""
+          ) {
+            this.failed();
+          } else {
+            return [
+              (data.nombreProveedor =
+                document.getElementById("swal-input1").value),
+              (data.descripcion = document.getElementById("swal-input2").value),
+              (data.NIT = document.getElementById("swal-input3").value),
+              (data.direccionProveedor =
+                document.getElementById("swal-input4").value),
+              (data.contacto = document.getElementById("swal-input5").value),
+              axios
+                .put(`/editar/proveedores/` + uidProveedor, {
+                  nombreProveedor: data.nombreProveedor,
+                  descripcion: data.descripcion,
+                  NIT: data.NIT,
+                  direccionProveedor: data.direccionProveedor,
+                  contacto: data.contacto,
+                })
+                .then((Response) => {
+                  this.showDone();
+                  setTimeout(() => {
+                    location.reload();
+                  }, 1000);
+                })
+                .catch((e) => {
+                  this.failed();
+                }),
+            ];
+          }
+        },
       });
     },
   },

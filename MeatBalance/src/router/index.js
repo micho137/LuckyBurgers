@@ -5,8 +5,6 @@ import Login from '../components/LoginForm.vue'
 import Pedidos from '../components/pedidosComponents/Pedidos.vue'
 import Proveedores from '../components/proveedoresComponents/Proveedores.vue'
 import Productos from '../components/productosComponents/Productos.vue'
-import EditProductos from '../components/productosComponents/EditarProductos.vue'
-import EditProveedor from '../components/proveedoresComponents/EditarProveedores.vue'
 import Monetarios from '../components/monetariosComponents/Monetarios.vue'
 import CompraInsumo from '../components/monetariosComponents/Insumo/compraInsumo.vue'
 import GenerarEgreso from '../components/monetariosComponents/Egreso/generarEgreso.vue'
@@ -16,7 +14,7 @@ const router = createRouter({
     history: createWebHistory(),
     routes:[
         {
-            path:'/Login',
+            path:'/',
             component:Login
         },
         {
@@ -28,16 +26,8 @@ const router = createRouter({
             component:Proveedores
         },
         {
-            path:'/EditarProveedor',
-            component:EditProveedor
-        },
-        {
             path:'/Productos',
             component:Productos
-        },
-        {
-            path:'/EditarProducto',
-            component:EditProductos
         },
         {
             path:'/Monetarios',
@@ -61,9 +51,9 @@ const router = createRouter({
 
 router.beforeEach((to)=>{
     const store = useLoginStore()
-    const publicPage = ['/Login']
+    const publicPage = ['/']
     const authRequire = !publicPage.includes(to.path)
-    if (authRequire && !store.authUser) return '/Login'
+    if (authRequire && !store.authUser) return '/'
 }) 
 
 export default router

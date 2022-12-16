@@ -20,7 +20,7 @@
           tipoProducto,
           precio,
           imgProducto,
-          uid
+          uid,
         } in Productos"
         :key="nombreProducto"
       >
@@ -29,10 +29,30 @@
         <td>{{ categoria.nombreCategoria }}</td>
         <td>{{ tipoProducto }}</td>
         <td>${{ precio }}</td>
-        <td><v-img lazy-src="https://res.cloudinary.com/djdxi88e0/image/upload/v1670184495/meatbalance_lqntpv.png" :src="imgProducto"> </v-img></td>
+        <td>
+          <v-img
+            lazy-src="https://res.cloudinary.com/djdxi88e0/image/upload/v1670184495/meatbalance_lqntpv.png"
+            :src="imgProducto"
+          >
+          </v-img>
+        </td>
         <td>
           <div class="d-flex justify-center">
-            <v-btn color="comoNaranja" class="mr-4" @click="goEdit()">
+            <v-btn
+              color="comoNaranja"
+              class="mr-4"
+              @click="
+                showEditAlert(
+                  nombreProducto,
+                  descripcionProducto,
+                  categoria,
+                  tipoProducto,
+                  precio,
+                  imgProducto,
+                  uid
+                )
+              "
+            >
               Editar
             </v-btn>
             <v-btn color="grey" @click="showDeleteAlert(uid)"> Eliminar </v-btn>
@@ -70,6 +90,87 @@ export default {
           console.log(response);
           this.getProductos();
         });
+    },
+    showDone() {
+      this.$swal({
+        icon: "success",
+        title: "Producto editado con exito",
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1000,
+        timerProgressBar: true,
+      });
+    },
+    failed() {
+      this.$swal({
+        icon: "error",
+        title: "Oops...",
+        text: "Debes llenar todos los datos",
+        showConfirmButton: true,
+      });
+    },
+    showEditAlert(
+      nombreProducto,
+      descripcionProducto,
+      categoria,
+      tipoProducto,
+      precio,
+      imgProducto,
+      uid
+    ) {
+      const data = {
+        nombreProducto,
+          descripcionProducto,
+          categoria,
+          tipoProducto,
+          precio,
+          imgProducto
+      };
+      this.$swal({
+        title: "Editar producto",
+        html:
+          `<input value='${data.nombreProducto}' placeholder="Nombre Producto" id="swal-input1" class="swal2-input">` +
+          `<input value='${data.descripcionProducto}' placeholder="Descripcion" id="swal-input2" class="swal2-input">` +
+          `` +
+          `` +
+          `<input value='${data.precio}' placeholder="Precio" id="swal-input5" class="swal2-input">`,
+        showCancelButton: true,
+        focusConfirm: false,
+        confirmButtonText: "Editar",
+        confirmButtonColor: "#FC6C4C",
+        preConfirm: () => {
+          if (
+            document.getElementById("swal-input1").value === "" ||
+            document.getElementById("swal-input2").value === "" ||
+            document.getElementById("swal-input5").value === ""
+          ) {
+            this.failed();
+          } else {
+            return [
+              (data.nombreProducto =
+                document.getElementById("swal-input1").value),
+              (data.descripcionProducto = document.getElementById("swal-input2").value),
+              (data.precio = document.getElementById("swal-input5").value),
+              axios
+                .put(`/editar/productos/` + uid, {
+                  nombreProducto: data.nombreProducto,
+                  descripcionProducto: data.descripcionProducto,
+                  precio: data.precio,
+                })
+                .then((Response) => {
+                  this.showDone();
+                  setTimeout(() => {
+                    location.reload();
+                  }, 1000);
+                })
+                .catch((e) => {
+                  this.failed();
+                }),
+            ];
+          }
+        },
+      });
     },
     showDeleteAlert(id) {
       this.$swal({
