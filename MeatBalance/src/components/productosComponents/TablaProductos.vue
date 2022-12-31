@@ -48,7 +48,6 @@
                   categoria,
                   tipoProducto,
                   precio,
-                  imgProducto,
                   uid
                 )
               "
@@ -68,12 +67,24 @@ import axios from "axios";
 export default {
   data() {
     return {
+      Category: [],
       Productos: null,
     };
   },
   methods: {
     goEdit() {
       this.$router.push("EditarProducto");
+    },
+    prueba() {
+      var select = document.getElementById("selectCategory");
+
+      for (var i = 0; i < this.Category.length; i++) {
+        var opt = this.Category[i];
+        var el = document.createElement("option");
+        el.textContent = opt;
+        el.value = opt;
+        select.append(el);
+      }
     },
     getProductos() {
       axios
@@ -116,25 +127,27 @@ export default {
       categoria,
       tipoProducto,
       precio,
-      imgProducto,
       uid
     ) {
       const data = {
         nombreProducto,
-          descripcionProducto,
-          categoria,
-          tipoProducto,
-          precio,
-          imgProducto
+        descripcionProducto,
+        categoria,
+        tipoProducto,
+        precio,
       };
       this.$swal({
         title: "Editar producto",
         html:
-          `<input value='${data.nombreProducto}' placeholder="Nombre Producto" id="swal-input1" class="swal2-input">` +
-          `<input value='${data.descripcionProducto}' placeholder="Descripcion" id="swal-input2" class="swal2-input">` +
-          `` +
-          `` +
-          `<input value='${data.precio}' placeholder="Precio" id="swal-input5" class="swal2-input">`,
+          `<div style="display:flex;justify-content:center;flex-direction:column;margin-bottom: 10px"><label><strong>Nombre del Producto</strong></label><input style="text-align:center" value='${data.nombreProducto}' placeholder="Nombre del Producto" id="swal-input1" class="swal2-input"></div>` +
+          `<div style="display:flex;justify-content:center;flex-direction:column;margin-bottom: 10px"><label><strong>Descripcion</strong></label><input style="text-align:center" value='${data.descripcionProducto}' placeholder="Descripcion" id="swal-input2" class="swal2-input"></div>` +
+          `<div style="display:flex;justify-content:center;flex-direction:column;margin-bottom: 10px"><label><strong>Categoria</strong></label>
+            <input style="text-align:center" value='${data.categoria.nombreCategoria}' placeholder="Categoria" id="swal-input3" class="swal2-input">
+            <select id="selectCategory" class="swal2-input">
+              <option>Hola</option></select>
+            </div>` +
+          `<div style="display:flex;justify-content:center;flex-direction:column;margin-bottom: 10px"><label><strong>Tipo de Producto</strong></label><input style="text-align:center" value='${data.tipoProducto}' placeholder="Tipo de Producto" id="swal-input4" class="swal2-input"></div>` +
+          `<div style="display:flex;justify-content:center;flex-direction:column;margin-bottom: 10px"><label><strong>Precio</strong></label><input style="text-align:center" value='${data.precio}' placeholder="Precio" id="swal-input5" class="swal2-input"></div>`,
         showCancelButton: true,
         focusConfirm: false,
         confirmButtonText: "Editar",
@@ -143,6 +156,8 @@ export default {
           if (
             document.getElementById("swal-input1").value === "" ||
             document.getElementById("swal-input2").value === "" ||
+            document.getElementById("swal-input3").value === "" ||
+            document.getElementById("swal-input4").value === "" ||
             document.getElementById("swal-input5").value === ""
           ) {
             this.failed();
@@ -150,7 +165,8 @@ export default {
             return [
               (data.nombreProducto =
                 document.getElementById("swal-input1").value),
-              (data.descripcionProducto = document.getElementById("swal-input2").value),
+              (data.descripcionProducto =
+                document.getElementById("swal-input2").value),
               (data.precio = document.getElementById("swal-input5").value),
               axios
                 .put(`/editar/productos/` + uid, {
@@ -188,9 +204,23 @@ export default {
         }
       });
     },
+    getCategorias() {
+      axios
+        .get("http://localhost:4000/categorias")
+        .then((response) => {
+          this.Category = response.data["resp"][1].map((obj) => {
+            return {
+              uid: obj["uid"],
+              nombreCategoria: obj["nombreCategoria"],
+            };
+          });
+        })
+        .catch((t) => console.log(t));
+    },
   },
   mounted() {
     this.getProductos();
+    this.getCategorias();
   },
 };
 </script>

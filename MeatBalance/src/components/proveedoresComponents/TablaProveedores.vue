@@ -134,11 +134,11 @@ export default {
       this.$swal({
         title: "Editar proveedor",
         html:
-          `<input value='${data.nombreProveedor}' placeholder="Nombre Proveedor" id="swal-input1" class="swal2-input">` +
-          `<input value='${data.descripcion}' placeholder="Descripcion" id="swal-input2" class="swal2-input">` +
-          `<input value='${data.NIT}' placeholder="NIT" id="swal-input3" class="swal2-input">` +
-          `<input value='${data.direccionProveedor}' placeholder="Direccion" id="swal-input4" class="swal2-input">` +
-          `<input value='${data.contacto}' placeholder="Contacto" id="swal-input5" class="swal2-input">`,
+          `<div style="display:flex;justify-content:center;flex-direction:column;margin-bottom: 10px"><label><strong>Proveedor</strong></label><input style="text-align:center" value='${data.nombreProveedor}' placeholder="Nombre Proveedor" id="swal-input1" class="swal2-input"></div>` +
+          `<div style="display:flex;justify-content:center;flex-direction:column;margin-bottom: 10px"><label><strong>Descripcion</strong></label><input style="text-align:center" value='${data.descripcion}' placeholder="Descripcion" id="swal-input2" class="swal2-input"></div>` +
+          `<div style="display:flex;justify-content:center;flex-direction:column;margin-bottom: 10px"><label><strong>NIT</strong></label><input style="text-align:center" value='${data.NIT}' placeholder="NIT" id="swal-input3" class="swal2-input"></div>` +
+          `<div style="display:flex;justify-content:center;flex-direction:column;margin-bottom: 10px"><label><strong>Direccion</strong></label><input style="text-align:center" value='${data.direccionProveedor}' placeholder="Direccion" id="swal-input4" class="swal2-input"></div>` +
+          `<div style="display:flex;justify-content:center;flex-direction:column;margin-bottom: 10px"><label><strong>Contacto</strong></label><input style="text-align:center" value='${data.contacto}' placeholder="Contacto" id="swal-input5" class="swal2-input"></div>`,
         showCancelButton: true,
         focusConfirm: false,
         confirmButtonText: "Editar",
