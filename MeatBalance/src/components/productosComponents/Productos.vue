@@ -59,7 +59,7 @@ export default {
       }
     },
     reload(){
-      location.reload()
+      this.$router.go()
     }
   },
   components: {
