@@ -4,6 +4,7 @@
       <v-row>
         <v-col class="">
           <v-sheet
+            color="comoNaranja"
             min-height="70vh"
             rounded="lg"
             class="pa-5 justify-center align-center d-flex"
@@ -13,6 +14,7 @@
         </v-col>
         <v-col>
           <v-sheet
+            color="comoNaranja"
             min-height="70vh"
             rounded="lg"
             class="pa-5 justify-center align-center d-flex"
@@ -22,6 +24,7 @@
         </v-col>
         <v-col>
           <v-sheet
+            color="comoNaranja"
             min-height="70vh"
             rounded="lg"
             class="pa-5 justify-center align-center d-flex"

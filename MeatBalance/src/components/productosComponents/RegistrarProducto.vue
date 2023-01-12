@@ -1,11 +1,12 @@
 <template>
-  <v-form ref="form" v-model="valid" lazy-validation>
+  <v-form ref="form" class="mt-10" v-model="valid" lazy-validation>
     <v-container>
       <v-row class="d-flex flex-column align-center">
         <v-col cols="12" md="4">
           <v-text-field
             v-model="nombreProducto"
             :rules="nameRules"
+            color="comoNaranja"
             label="Nombre del producto"
             required
           ></v-text-field>
@@ -14,6 +15,7 @@
         <v-col cols="12" md="4">
           <v-text-field
             v-model="descripcion"
+            color="comoNaranja"
             :rules="descripcionRules"
             label="Descripcion"
             required
@@ -23,6 +25,7 @@
         <v-col cols="12" md="4">
           <v-text-field
             v-model="precio"
+            color="comoNaranja"
             :rules="precioRules"
             label="Precio"
             prefix="$"
@@ -33,6 +36,7 @@
         <v-col cols="12" md="4">
           <v-select
             v-model="categoriaProducto"
+            color="comoNaranja"
             :rules="precioRules"
             item-value="uid"
             item-title="nombreCategoria"
@@ -45,6 +49,7 @@
 
         <v-col cols="12" md="4">
           <v-select
+            color="comoNaranja"
             v-model="tipoProducto"
             :rules="tipoRules"
             :items="tProducto"
@@ -54,7 +59,7 @@
           </v-select>
         </v-col>
 
-        <v-col cols="12" md="4" class="">
+        <!-- <v-col cols="12" md="4" class="">
           <v-file-input
             persistent-hint
             hint="Formatos permitidos: .png .jpeg .bmp"
@@ -76,10 +81,10 @@
                 : 'https://res.cloudinary.com/djdxi88e0/image/upload/v1670184495/meatbalance_lqntpv.png'
             "
           ></v-img>
-        </v-col>
+        </v-col> -->
       </v-row>
       <div class="d-flex justify-center mt-6">
-        <v-btn color="blue-grey" class="mr-4" @click="validate">
+        <v-btn color="comoNaranja" class="mr-4" @click="validate">
           Registrar
         </v-btn>
         <v-btn color="grey" class="mr-4" @click="reset"> Reset Form </v-btn>
@@ -95,13 +100,13 @@ import axios from "axios";
 export default {
   data: () => ({
     Category: [],
-    tProducto:["Inventario","Venta"],
+    tProducto: ["Inventario", "Venta"],
     categoriaProducto: "",
     archivo: "",
     nombreProducto: "",
     descripcion: "",
     precio: "",
-    archivoPreview: "",
+    //archivoPreview: "",
     tipoProducto: "",
     valid: true,
     nameRules: [(v) => !!v || "El nombre es requerido"],
@@ -129,39 +134,40 @@ export default {
     async validate() {
       const { valid } = await this.$refs.form.validate();
       if (valid) {
-        let data = new FormData();
+        /* let data = new FormData();
         var file = this.archivo[0]
         data.append("nombreProducto", this.nombreProducto);
         data.append("descripcionProducto", this.descripcion);
         data.append("precio", this.precio);
         data.append("archivo",file);
         data.append("categoria", this.categoriaProducto);
-        data.append("tipoProducto",this.tipoProducto)
-        await axios
-          .post("http://localhost:4000/crear/productos", data, {
+        data.append("tipoProducto",this.tipoProducto) */
+        await axios;
+        /* .post("http://localhost:4000/crear/productos", data, {
             headers: {
               "accept": "application/json",
               "Content-Type": `multipart/form-data`,
             },
-          })
+          }) */
+        let data = {
+          nombreProducto: this.nombreProducto,
+          descripcionProducto: this.descripcion,
+          precio: this.precio,
+          categoria: this.categoriaProducto,
+          tipoProducto: this.tipoProducto,
+        }
+          .post("http://localhost:4000/crear/productos", data)
           .then((response) => {
             this.showRegisterAlert();
-            this.resetNoFile()
-
-          }).catch((e)=> this.failed())
+            this.reset();
+          })
+          .catch((e) => this.failed());
       }
     },
     reset() {
       this.$refs.form.reset();
     },
-    resetNoFile(){
-      this.nombreProducto='',
-      this.categoriaProducto='',
-      this.descripcion='',
-      this.precio='',
-      this.tipoProducto=''
-    },
-    async selectImage(a) {
+    /* async selectImage(a) {
       const file = a.target.files[0];
       if (!file) return;
       const readData = (f) =>
@@ -175,7 +181,7 @@ export default {
     },
     async imageClear() {
       this.archivoPreview = "";
-    },
+    }, */
     getCategorias() {
       axios
         .get("http://localhost:4000/categorias")

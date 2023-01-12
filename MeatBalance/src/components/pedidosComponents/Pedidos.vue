@@ -18,7 +18,7 @@
 
               <v-divider class="my-2"></v-divider>
 
-              <v-list-item link color="grey-lighten-4">
+              <v-list-item link>
                 <v-list-item-title @click="reload"> Refresh </v-list-item-title>
               </v-list-item>
             </v-list>

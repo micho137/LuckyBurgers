@@ -22,7 +22,8 @@ export default createVuetify({
           comoNaranja: '#FC6C4C',
           grisOpaco:'#F3F3E3',
           comoRosado:'#FCA999',
-          comoAzulrey:'#243264'
+          comoAzulrey:'#243264',
+          grisButton:'#a2a2a2'
         },
       },
     },

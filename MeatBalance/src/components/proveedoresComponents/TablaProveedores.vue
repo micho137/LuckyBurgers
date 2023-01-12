@@ -76,7 +76,6 @@ export default {
       await axios
         .delete("http://localhost:4000/delete/proveedor/" + id)
         .then((response) => {
-          console.log(response);
           this.getProveedores();
         });
     },
@@ -169,7 +168,7 @@ export default {
                   direccionProveedor: data.direccionProveedor,
                   contacto: data.contacto,
                 })
-                .then((Response) => {
+                .then(() => {
                   this.showDone();
                   setTimeout(() => {
                     location.reload();

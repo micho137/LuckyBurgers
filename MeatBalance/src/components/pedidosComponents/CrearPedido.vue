@@ -6,7 +6,7 @@
           <v-form ref="form" v-model="valid" lazy-validation class="">
             <div class="d-flex flex-column">
               <v-autocomplete
-                transition="scroll-x-transition"
+              color="comoNaranja"
                 v-model="select"
                 :items="Productos"
                 item-value="[precio, nombreProducto, uid]"
@@ -18,6 +18,7 @@
               ></v-autocomplete>
 
               <v-text-field
+              color="comoNaranja"
                 v-model="number"
                 :rules="numberRules"
                 label="Cantidad"
@@ -25,18 +26,27 @@
                 min="1"
                 type="number"
               ></v-text-field>
+
+              <div class="d-flex flex-column justify-center">
+                <v-autocomplete
+                color="comoNaranja"
+                  v-model="select"
+                  :items="Productos"
+                  item-value="[precio, nombreProducto, uid]"
+                  item-title="precio"
+                  label="Precio por unidad"
+                  disabled
+                  return-object
+                ></v-autocomplete>
+              </div>
             </div>
 
             <div class="mt-4 d-flex justify-center">
-              <v-btn class="mr-2" color="primary" @click="add">
+              <v-btn class="mr-2" color="comoNaranja" @click="add">
                 Agregar
-                <v-icon end icon="mdi-plus-box"></v-icon>
               </v-btn>
 
-              <v-btn color="red" @click="reset">
-                Limpiar
-                <v-icon end icon="mdi-delete"></v-icon>
-              </v-btn>
+              <v-btn color="grisButton" @click="reset"> Limpiar </v-btn>
             </div>
           </v-form>
         </v-sheet>
@@ -44,15 +54,17 @@
       <v-col>
         <!-- ESPACIO -->
         <v-sheet>
-          <tabla-vue :Check="activate" :Productos="pedidos" />
+          <tabla-vue :onDeletes="deletes" :Productos="pedidos" />
         </v-sheet>
         <!-- ESPACIO -->
         <v-col class="d-flex justify-space-around border rounded-lg pa-2 mt-4">
           <div v-if="onSuccess" class="d-flex">
-            <v-btn color="success" class="mr-4" @click="prueba()">
+            <v-btn color="comoNaranja" class="mr-4" @click="prueba()">
               Enviar Pedido
             </v-btn>
-            <v-btn @click="cleanTable" color="error"> Limpiar Tabla </v-btn>
+            <v-btn @click="cleanTable" color="grisButton">
+              Limpiar Tabla
+            </v-btn>
           </div>
           <div class="">
             <v-sheet class="text-button font-weight-bold">
@@ -80,11 +92,28 @@ export default {
   },
   data: () => ({
     valid: true,
-    onSuccess:false,
-    onClean:false,
-    datos:[],
+    onSuccess: false,
+    onClean: false,
+    datos: [],
     Productos: [],
     pedidos: [],
+    mesas: [
+      "Mesa 1",
+      "Mesa 2",
+      "Mesa 3",
+      "Mesa 4",
+      "Mesa 5",
+      "Mesa 6",
+      "Mesa 7",
+      "Mesa 8",
+      "Mesa 9",
+      "Mesa 10",
+      "Mesa 11",
+      "Mesa 12",
+      "Mesa 13",
+      "Mesa 14",
+      "Mesa 15",
+    ],
     number: "",
     numberRules: [(v) => !!v || "Cantidad es requerida"],
     select: "",
@@ -99,8 +128,8 @@ export default {
     activate() {
       if (this.pedidos.length > 0) {
         this.onSuccess = true;
-      }else{
-        this.onSuccess=false
+      } else {
+        this.onSuccess = false;
       }
     },
     failed() {
@@ -119,8 +148,28 @@ export default {
         timer: 1500,
       });
     },
+    async selectMesa(table) {
+      await this.$swal({
+        title: "Seleccione la mesa que ordenó el pedido",
+        input: "select",
+        inputOptions: this.mesas,
+        inputPlaceholder: "Selecciona una mesa",
+        confirmButtonColor: "#FC6C4C",
+        showCancelButton: true,
+        inputValidator: (value) => {
+          return new Promise((resolve) => {
+            if (value) {
+              const valorArray = this.mesas[value]
+              resolve(this.validate(table,valorArray));
+            } else {
+              resolve("Debes seleccionar una mesa valida");
+            }
+          });
+        },
+      });
+    },
     async prueba() {
-        await this.$swal({
+      await this.$swal({
         title: "Selecciona el tipo de pedido",
         input: "select",
         inputOptions: {
@@ -128,44 +177,45 @@ export default {
           Domicilio: "Domicilio",
         },
         inputPlaceholder: "Tipo de pedido",
+        confirmButtonColor: "#FC6C4C",
         showCancelButton: true,
         inputValidator: (value) => {
           return new Promise((resolve) => {
             if (value === "Local") {
-              resolve(
-                this.validate(value)
-              );
+              resolve(this.selectMesa(value));
+            } else if (value === "Domicilio") {
+              resolve(this.validate(value,"Domicilio"));
             } else {
-              value = "Domicilio";
-              this.validate(value);
+              resolve("Debes seleccionar una opcion valida");
             }
           });
         },
       });
     },
-    async validate(value) {
+    async validate(value, table) {
       axios
         .post("http://localhost:4000/crearPedido", {
-          pedido:[
+          pedido: [
             {
-              total:this.getTotal,
-              tipoPedido:value
+              total: this.getTotal,
+              tipoPedido: value,
+              mesa: table,
             },
-            this.pedidos.map((pedido)=>{
+            this.pedidos.map((pedido) => {
               return {
-                producto:pedido.uid,
-                precio:pedido.precio,
-                cantidad:pedido.cantidad
-              }
-            })
-          ]
+                producto: pedido.uid,
+                precioDetalle: pedido.precio,
+                cantidad: pedido.cantidad,
+              };
+            }),
+          ],
         })
         .then(() => {
           this.showRegisterAlert();
-          this.cleanTable()
+          this.cleanTable();
         })
         .catch((e) => {
-          this.failed()
+          this.failed();
         });
     },
     getProductos() {
@@ -183,14 +233,20 @@ export default {
           producto: this.select.nombreProducto,
           cantidad: this.number,
           precio: this.select.precio * this.number,
-          uid:this.select.uid
+          uid: this.select.uid,
         });
         this.reset();
-        this.activate()
+        this.activate();
       }
     },
     reset() {
       this.$refs.form.reset();
+    },
+    deletes(index) {
+      this.pedidos = this.pedidos.filter(
+        (producto, pIndex) => pIndex !== index
+      );
+      this.activate();
     },
   },
   components: {

@@ -1,9 +1,10 @@
 <template>
-  <v-form ref="form" v-model="valid" lazy-validation>
+  <v-form ref="form" class="mt-10" v-model="valid" lazy-validation>
     <v-container>
       <v-row class="d-flex flex-column align-center">
         <v-col cols="12" md="4">
           <v-text-field
+            color="comoNaranja"
             v-model="nombreCategoria"
             :rules="categoriaRules"
             label="Nombre de la categoria"
@@ -12,6 +13,7 @@
         </v-col>
         <v-col cols="12" md="4">
           <v-textarea
+            color="comoNaranja"
             no-resize=""
             v-model="descripcion"
             :rules="descripcionRules"
@@ -22,7 +24,7 @@
         </v-col>
       </v-row>
       <div class="d-flex justify-center mt-6">
-        <v-btn color="blue-grey" class="mr-4" @click="validate">
+        <v-btn color="comoNaranja" class="mr-4" @click="validate">
           Registrar
         </v-btn>
 

@@ -7,7 +7,6 @@
         <th class="text-center text-button">Categoria</th>
         <th class="text-center text-button">Tipo Producto</th>
         <th class="text-center text-button">Precio</th>
-        <th class="text-center text-button">Imagen</th>
         <th class="text-center text-button">Accion</th>
       </tr>
     </thead>
@@ -19,7 +18,6 @@
           categoria,
           tipoProducto,
           precio,
-          imgProducto,
           uid,
         } in Productos"
         :key="nombreProducto"
@@ -29,13 +27,6 @@
         <td>{{ categoria.nombreCategoria }}</td>
         <td>{{ tipoProducto }}</td>
         <td>${{ precio }}</td>
-        <td>
-          <v-img
-            lazy-src="https://res.cloudinary.com/djdxi88e0/image/upload/v1670184495/meatbalance_lqntpv.png"
-            :src="imgProducto"
-          >
-          </v-img>
-        </td>
         <td>
           <div class="d-flex justify-center">
             <v-btn
@@ -85,6 +76,7 @@ export default {
         el.value = opt;
         select.append(el);
       }
+      return 
     },
     getProductos() {
       axios
@@ -142,10 +134,7 @@ export default {
           `<div style="display:flex;justify-content:center;flex-direction:column;margin-bottom: 10px"><label><strong>Nombre del Producto</strong></label><input style="text-align:center" value='${data.nombreProducto}' placeholder="Nombre del Producto" id="swal-input1" class="swal2-input"></div>` +
           `<div style="display:flex;justify-content:center;flex-direction:column;margin-bottom: 10px"><label><strong>Descripcion</strong></label><input style="text-align:center" value='${data.descripcionProducto}' placeholder="Descripcion" id="swal-input2" class="swal2-input"></div>` +
           `<div style="display:flex;justify-content:center;flex-direction:column;margin-bottom: 10px"><label><strong>Categoria</strong></label>
-            <input style="text-align:center" value='${data.categoria.nombreCategoria}' placeholder="Categoria" id="swal-input3" class="swal2-input">
-            <select id="selectCategory" class="swal2-input">
-              <option>Hola</option></select>
-            </div>` +
+            <input style="text-align:center" value='${data.categoria.nombreCategoria}' placeholder="Categoria" id="swal-input3" class="swal2-input">` +
           `<div style="display:flex;justify-content:center;flex-direction:column;margin-bottom: 10px"><label><strong>Tipo de Producto</strong></label><input style="text-align:center" value='${data.tipoProducto}' placeholder="Tipo de Producto" id="swal-input4" class="swal2-input"></div>` +
           `<div style="display:flex;justify-content:center;flex-direction:column;margin-bottom: 10px"><label><strong>Precio</strong></label><input style="text-align:center" value='${data.precio}' placeholder="Precio" id="swal-input5" class="swal2-input"></div>`,
         showCancelButton: true,

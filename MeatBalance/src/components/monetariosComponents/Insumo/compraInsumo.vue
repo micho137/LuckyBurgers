@@ -16,6 +16,7 @@
                     <v-autocomplete
                       transition="scroll-x-transition"
                       v-model="select"
+                      color="comoNaranja"
                       :items="Productos"
                       item-value="[nombreProducto, uid]"
                       item-title="nombreProducto"
@@ -27,6 +28,7 @@
 
                     <v-text-field
                       v-model="number"
+                      color="comoNaranja"
                       :rules="numberRules"
                       label="Cantidad"
                       required
@@ -36,6 +38,7 @@
 
                     <v-text-field
                       v-model="precioCompra"
+                      color="comoNaranja"
                       :rules="compraRules"
                       label="Precio de Compra"
                       required
@@ -47,6 +50,7 @@
                     <v-autocomplete
                       transition="scroll-x-transition"
                       v-model="selectProveedor"
+                      color="comoNaranja"
                       :items="Proveedores"
                       item-value="[nombreProveedor, uidProveedor]"
                       item-title="nombreProveedor"
@@ -58,14 +62,12 @@
                   </div>
 
                   <div class="mt-4 d-flex justify-center">
-                    <v-btn class="mr-2" color="primary" @click="add">
+                    <v-btn class="mr-2" color="comoNaranja" @click="add">
                       Agregar
-                      <v-icon end icon="mdi-plus-box"></v-icon>
                     </v-btn>
 
-                    <v-btn class="mr-2" color="red" @click="reset">
+                    <v-btn class="mr-2" color="grisButton" @click="reset">
                       Limpiar
-                      <v-icon end icon="mdi-delete"></v-icon>
                     </v-btn>
 
                     <v-btn @click="getBack" color="danger"> Cancelar </v-btn>
@@ -92,10 +94,10 @@
                 class="d-flex justify-space-around border rounded-lg pa-2 mt-4"
               >
                 <div v-if="onSuccess" class="d-flex">
-                  <v-btn color="success" class="mr-4" @click="validate()">
+                  <v-btn color="comoNaranja" class="mr-4" @click="validate()">
                     Registrar Compra
                   </v-btn>
-                  <v-btn @click="cleanTable" color="error">
+                  <v-btn @click="cleanTable" color="grisButton">
                     Limpiar Tabla
                   </v-btn>
                 </div>

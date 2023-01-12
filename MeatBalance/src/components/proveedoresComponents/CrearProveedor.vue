@@ -1,11 +1,12 @@
 <template>
-  <v-form ref="form" v-model="valid" lazy-validation>
+  <v-form class="mt-10" ref="form" v-model="valid" lazy-validation>
     <v-container>
       <v-row class="d-flex flex-column align-center">
         <v-col cols="12" md="4">
           <v-text-field
             v-model="nombreProveedor"
             :rules="nameRules"
+            color="comoNaranja"
             label="Nombre del proveedor"
             required
           ></v-text-field>
@@ -14,6 +15,7 @@
         <v-col cols="12" md="4">
           <v-text-field
             v-model="descripcion"
+            color="comoNaranja"
             :rules="descripcionRules"
             label="Descripcion"
             required
@@ -23,6 +25,7 @@
         <v-col cols="12" md="4">
           <v-text-field
             v-model="nit"
+            color="comoNaranja"
             :rules="nitRules"
             label="NIT"
             required
@@ -32,6 +35,7 @@
         <v-col cols="12" md="4">
           <v-text-field
             v-model="direccion"
+            color="comoNaranja"
             :rules="direccionRules"
             label="Direccion"
             required
@@ -41,13 +45,14 @@
         <v-col cols="12" md="4">
           <v-text-field
             v-model="contacto"
+            color="comoNaranja"
             :rules="contactoRules"
             label="Contacto"
             required
           ></v-text-field>
         </v-col>
         <div class="d-flex justify-center">
-          <v-btn color="blue-grey" class="mr-4" @click="validate">
+          <v-btn color="comoNaranja" class="mr-4" @click="validate">
             Registrar
           </v-btn>
 
@@ -92,21 +97,6 @@ export default {
         title: "Proveedor registrado exitosamente",
         showConfirmButton: false,
         timer: 1500,
-      });
-    },
-    showConditionAlert() {
-      this.$swal({
-        title: "Do you want to save the changes?",
-        showDenyButton: true,
-        confirmButtonText: "Si",
-        denyButtonText: `No`,
-      }).then((result) => {
-        /* Read more about isConfirmed, isDenied below */
-        if (result.isConfirmed) {
-          Swal.fire("Saved!", "", "success");
-        } else if (result.isDenied) {
-          Swal.fire("Changes are not saved", "", "info");
-        }
       });
     },
     async validate() {
