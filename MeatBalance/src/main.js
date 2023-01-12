@@ -4,7 +4,6 @@ import router from './router'
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
-axios.defaults.baseURL = 'http://localhost:4000/'
 // Composables
 import { createApp } from 'vue'
 import { createPinia } from 'pinia';

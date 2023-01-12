@@ -3,10 +3,11 @@
     <v-container>
       <v-sheet min-height="70vh" max-height="" rounded="lg" class="pa-5">
         <v-col>
-          <v-form ref="form" v-model="valid" lazy-validation class="d-flex flex-column align-center">
+          <v-form ref="form" v-model="valid" lazy-validation class="d-flex flex-column align-center mt-10">
             <v-col md="5">
               <v-text-field
                 v-model="monto"
+                color="comoNaranja"
                 :rules="valorRules"
                 label="Monto"
                 type="number"
@@ -17,6 +18,7 @@
             <v-col md="5">
               <v-textarea
                 no-resize=""
+                color="comoNaranja"
                 v-model="descripcion"
                 :rules="descripcionRules"
                 label="Descripcion"
@@ -25,7 +27,7 @@
               </v-textarea>
             </v-col>
             <div class="d-flex justify-center mt-6">
-              <v-btn color="blue-grey" class="mr-4" @click="validate">
+              <v-btn color="comoNaranja" class="mr-4" @click="validate">
                 Registrar
               </v-btn>
               <v-btn color="grey" class="mr-4" @click="reset">
@@ -44,6 +46,7 @@
 
 <script>
 import axios from "axios";
+const devRuta = import.meta.env.VITE_APP_RUTA_API
 export default {
   data: () => ({
     valid: true,
@@ -74,7 +77,7 @@ export default {
       const { valid } = await this.$refs.form.validate();
       if (valid) {
         await axios
-          .post("http://localhost:4000/crear/egreso", {
+          .post(devRuta+"/crear/egreso", {
             totalEgreso: this.monto,
             descripcionEgreso: this.descripcion,
           })

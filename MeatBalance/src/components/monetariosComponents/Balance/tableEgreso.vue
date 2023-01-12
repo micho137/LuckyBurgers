@@ -31,6 +31,7 @@
   
   <script>
 import axios from "axios";
+const devRuta = import.meta.env.VITE_APP_RUTA_API
 export default {
   data() {
     return {
@@ -41,7 +42,7 @@ export default {
   methods: {
     async getIngresos() {
       await axios
-        .get("http://localhost:4000/egresos")
+        .get(devRuta+"/egresos")
         .then((response) => {
           console.log(response);
           this.Egresos = response.data["resp"][1];

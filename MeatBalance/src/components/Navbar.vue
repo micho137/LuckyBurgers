@@ -19,10 +19,21 @@
       {{ link.title }}
     </v-btn>
   </v-container>
+  <v-btn v-if="onExit" @click="cerrarSesion()" style="background-color:white;color:#FC6C4C;">Salir</v-btn>
 </template>
 
 <script>
+import { useLoginStore } from "@/stores/LoginStore";
 export default {
+  setup() {
+    const authStore = useLoginStore();
+    return { authStore };
+  },
+  computed:{
+    onExit(){
+      return this.authStore.authUser!=null
+    }
+  },
   data: () => ({
     links: [
       { title: "Pedidos", route: "/Pedidos" },
@@ -35,6 +46,17 @@ export default {
     goToRoute(route) {
       this.$router.push(route);
     },
+    showAlert() {
+      this.$swal({
+        icon: "success",
+        title: "Cerrando sesion, espere unos segundos",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    },
+    cerrarSesion(){
+      this.authStore.logout(this.showAlert)
+    }
   },
 };
 </script>

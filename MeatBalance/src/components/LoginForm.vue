@@ -13,9 +13,16 @@
               min-width="350"
               max-width="400"
             >
-            <v-sheet rounded="lg" class="d-flex justify-center bg-grisOpaco mb-5 pa-2">
-              <v-img max-height="70" max-width="70" src="https://res.cloudinary.com/djdxi88e0/image/upload/v1670184495/meatbalance_lqntpv.png"></v-img>
-            </v-sheet>
+              <v-sheet
+                rounded="lg"
+                class="d-flex justify-center bg-grisOpaco mb-5 pa-2"
+              >
+                <v-img
+                  max-height="70"
+                  max-width="70"
+                  src="https://res.cloudinary.com/djdxi88e0/image/upload/v1670184495/meatbalance_lqntpv.png"
+                ></v-img>
+              </v-sheet>
               <v-form v-model="form" @submit.prevent="onSubmit()">
                 <v-text-field
                   v-model="email"
@@ -70,7 +77,7 @@ export default {
     return { authStore };
   },
   data: () => ({
-    show1:false,
+    show1: false,
     form: true,
     email: "",
     password: "",

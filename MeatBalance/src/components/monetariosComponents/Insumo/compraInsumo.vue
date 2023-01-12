@@ -118,7 +118,7 @@
   <script>
 import axios from "axios";
 import TablaInsumo from "../Insumo/TablaInsumo.vue";
-
+const devRuta = import.meta.env.VITE_APP_RUTA_API
 export default {
   computed: {
     getTotal() {
@@ -181,7 +181,7 @@ export default {
     },
     async validate() {
       await axios
-        .post("http://localhost:4000/crearCompra", {
+        .post(devRuta+"/crearCompra", {
           compra: [
             {
               totalCompra: this.getTotal,
@@ -206,7 +206,7 @@ export default {
     },
     getProductos() {
       axios
-        .get("http://localhost:4000/productos")
+        .get(devRuta+"/productos")
         .then((response) => {
           this.Productos = response.data["resp"][1];
         })
@@ -214,7 +214,7 @@ export default {
     },
     getProveedores() {
       axios
-        .get("http://localhost:4000/proveedores")
+        .get(devRuta+"/proveedores")
         .then((response) => {
           this.Proveedores = response.data["resp"][1];
         })

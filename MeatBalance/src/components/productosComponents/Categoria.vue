@@ -36,7 +36,7 @@
 
 <script>
 import axios from "axios";
-
+const devRuta = import.meta.env.VITE_APP_RUTA_API
 export default {
   data: () => ({
     valid: true,
@@ -66,18 +66,15 @@ export default {
       const { valid } = await this.$refs.form.validate();
       if (valid) {
         await axios
-          .post("http://localhost:4000/crear/categorias", {
+          .post(devRuta+"/crear/categorias", {
             nombreCategoria: this.nombreCategoria,
             descripcion: this.descripcion,
           })
-          .then((Response) => {
+          .then(() => {
             this.showRegisterAlert();
             this.reset();
-          });
-      } else {
-        /* this.failed(); */
+          }).catch((e)=>console.log(e));
       }
-      /* if (valid) alert("Proveedor registrado"); */
     },
     reset() {
       this.$refs.form.reset();

@@ -165,6 +165,7 @@
 
 <script>
 import axios from "axios";
+const devRuta = import.meta.env.VITE_APP_RUTA_API
 export default {
   computed: {
     getTotal() {
@@ -202,7 +203,7 @@ export default {
     async getPedidos() {
       const idPedido = localStorage.getItem("idPedido");
       await axios
-        .get(`productos/pedido/${idPedido}`)
+        .get(`${devRuta}/productos/pedido/${idPedido}`)
         .then((response) => {
           this.Productos = response.data;
         })

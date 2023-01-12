@@ -96,7 +96,7 @@
 <script>
 import FormData from "form-data";
 import axios from "axios";
-
+const devRuta = import.meta.env.VITE_APP_RUTA_API
 export default {
   data: () => ({
     Category: [],
@@ -134,6 +134,13 @@ export default {
     async validate() {
       const { valid } = await this.$refs.form.validate();
       if (valid) {
+        let data = {
+          nombreProducto: this.nombreProducto,
+          descripcionProducto: this.descripcion,
+          precio: this.precio,
+          categoria: this.categoriaProducto,
+          tipoProducto: this.tipoProducto,
+        }
         /* let data = new FormData();
         var file = this.archivo[0]
         data.append("nombreProducto", this.nombreProducto);
@@ -142,21 +149,14 @@ export default {
         data.append("archivo",file);
         data.append("categoria", this.categoriaProducto);
         data.append("tipoProducto",this.tipoProducto) */
-        await axios;
+        await axios
         /* .post("http://localhost:4000/crear/productos", data, {
             headers: {
               "accept": "application/json",
               "Content-Type": `multipart/form-data`,
             },
           }) */
-        let data = {
-          nombreProducto: this.nombreProducto,
-          descripcionProducto: this.descripcion,
-          precio: this.precio,
-          categoria: this.categoriaProducto,
-          tipoProducto: this.tipoProducto,
-        }
-          .post("http://localhost:4000/crear/productos", data)
+          .post(devRuta+"/crear/productos", data)
           .then((response) => {
             this.showRegisterAlert();
             this.reset();
@@ -184,7 +184,7 @@ export default {
     }, */
     getCategorias() {
       axios
-        .get("http://localhost:4000/categorias")
+        .get(devRuta+"/categorias")
         .then((response) => {
           this.Category = response.data["resp"][1].map((obj) => {
             return {

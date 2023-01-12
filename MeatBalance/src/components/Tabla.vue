@@ -46,6 +46,7 @@
 
 <script>
 import axios from "axios";
+const devRuta = import.meta.env.VITE_APP_RUTA_API
 export default {
   data() {
     return {
@@ -55,7 +56,7 @@ export default {
   methods: {
     getPedidos() {
       axios
-        .get("http://localhost:4000/obtenerPedidos")
+        .get(devRuta+"/obtenerPedidos")
         .then((response) => {
           this.Pedidos = response.data["ingresos"];
         })
@@ -63,7 +64,7 @@ export default {
     },
     async deletePedido(uid) {
       await axios
-        .delete("http://localhost:4000/borrar/venta/" + uid)
+        .delete(devRuta+"/borrar/venta/" + uid)
         .then(() => this.getPedidos())
         .catch((t) => this.failed());
     },

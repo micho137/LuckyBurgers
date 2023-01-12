@@ -55,6 +55,7 @@
   
 <script>
 import axios from "axios";
+const devRuta = import.meta.env.VITE_APP_RUTA_API
 export default {
   data() {
     return {
@@ -80,7 +81,7 @@ export default {
     },
     getProductos() {
       axios
-        .get("http://localhost:4000/productos")
+        .get(devRuta+"/productos")
         .then((response) => {
           this.Productos = response.data["resp"][1];
         })
@@ -88,9 +89,8 @@ export default {
     },
     async deleteProducto(id) {
       await axios
-        .delete("http://localhost:4000/delete/productos/" + id)
+        .delete(devRuta+"/delete/productos/" + id)
         .then((response) => {
-          console.log(response);
           this.getProductos();
         });
     },
@@ -158,7 +158,7 @@ export default {
                 document.getElementById("swal-input2").value),
               (data.precio = document.getElementById("swal-input5").value),
               axios
-                .put(`/editar/productos/` + uid, {
+                .put(`${devRuta}/editar/productos/` + uid, {
                   nombreProducto: data.nombreProducto,
                   descripcionProducto: data.descripcionProducto,
                   precio: data.precio,
@@ -195,7 +195,7 @@ export default {
     },
     getCategorias() {
       axios
-        .get("http://localhost:4000/categorias")
+        .get(devRuta+"/categorias")
         .then((response) => {
           this.Category = response.data["resp"][1].map((obj) => {
             return {

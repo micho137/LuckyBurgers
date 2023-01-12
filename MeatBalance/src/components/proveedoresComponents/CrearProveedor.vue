@@ -65,6 +65,7 @@
 
 <script>
 import axios from "axios";
+const devRuta = import.meta.env.VITE_APP_RUTA_API
 export default {
   data: () => ({
     Proveedores: null,
@@ -103,7 +104,7 @@ export default {
       const { valid } = await this.$refs.form.validate();
       if (valid) {
         await axios
-          .post(`http://localhost:4000/crear/proveedores`, {
+          .post(`${devRuta}/crear/proveedores`, {
             nombreProveedor: this.nombreProveedor,
             descripcion: this.descripcion,
             NIT: this.nit,

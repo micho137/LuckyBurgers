@@ -57,6 +57,7 @@
 
 <script>
 import axios from "axios";
+const devRuta = import.meta.env.VITE_APP_RUTA_API
 export default {
   data() {
     return {
@@ -66,7 +67,7 @@ export default {
   methods: {
     getProveedores() {
       axios
-        .get("http://localhost:4000/proveedores")
+        .get(devRuta+"/proveedores")
         .then((response) => {
           this.Proveedores = response.data["resp"][1];
         })
@@ -74,7 +75,7 @@ export default {
     },
     async deleteProveedor(id) {
       await axios
-        .delete("http://localhost:4000/delete/proveedor/" + id)
+        .delete(devRuta+"/delete/proveedor/" + id)
         .then((response) => {
           this.getProveedores();
         });
@@ -161,7 +162,7 @@ export default {
                 document.getElementById("swal-input4").value),
               (data.contacto = document.getElementById("swal-input5").value),
               axios
-                .put(`/editar/proveedores/` + uidProveedor, {
+                .put(`${devRuta}/editar/proveedores/` + uidProveedor, {
                   nombreProveedor: data.nombreProveedor,
                   descripcion: data.descripcion,
                   NIT: data.NIT,

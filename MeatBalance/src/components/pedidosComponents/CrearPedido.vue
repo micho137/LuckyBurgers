@@ -80,6 +80,7 @@
 <script>
 import axios from "axios";
 import TablaVue from "../pedidosComponents/TablaPedido.vue";
+const devRuta = import.meta.env.VITE_APP_RUTA_API
 export default {
   computed: {
     getTotal() {
@@ -194,7 +195,7 @@ export default {
     },
     async validate(value, table) {
       axios
-        .post("http://localhost:4000/crearPedido", {
+        .post(devRuta+"/crearPedido", {
           pedido: [
             {
               total: this.getTotal,
@@ -220,7 +221,7 @@ export default {
     },
     getProductos() {
       axios
-        .get("http://localhost:4000/productos")
+        .get(devRuta+"/productos")
         .then((response) => {
           this.Productos = response.data["resp"][1];
         })
