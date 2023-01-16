@@ -6,7 +6,7 @@
           <v-form ref="form" v-model="valid" lazy-validation class="">
             <div class="d-flex flex-column">
               <v-autocomplete
-              color="comoNaranja"
+                color="comoNaranja"
                 v-model="select"
                 :items="Productos"
                 item-value="[precio, nombreProducto, uid]"
@@ -18,7 +18,7 @@
               ></v-autocomplete>
 
               <v-text-field
-              color="comoNaranja"
+                color="comoNaranja"
                 v-model="number"
                 :rules="numberRules"
                 label="Cantidad"
@@ -29,7 +29,7 @@
 
               <div class="d-flex flex-column justify-center">
                 <v-autocomplete
-                color="comoNaranja"
+                  color="comoNaranja"
                   v-model="select"
                   :items="Productos"
                   item-value="[precio, nombreProducto, uid]"
@@ -80,7 +80,7 @@
 <script>
 import axios from "axios";
 import TablaVue from "../pedidosComponents/TablaPedido.vue";
-const devRuta = import.meta.env.VITE_APP_RUTA_API
+const devRuta = import.meta.env.VITE_APP_RUTA_API;
 export default {
   computed: {
     getTotal() {
@@ -160,8 +160,8 @@ export default {
         inputValidator: (value) => {
           return new Promise((resolve) => {
             if (value) {
-              const valorArray = this.mesas[value]
-              resolve(this.validate(table,valorArray));
+              const valorArray = this.mesas[value];
+              resolve(this.validate(table, valorArray));
             } else {
               resolve("Debes seleccionar una mesa valida");
             }
@@ -185,7 +185,7 @@ export default {
             if (value === "Local") {
               resolve(this.selectMesa(value));
             } else if (value === "Domicilio") {
-              resolve(this.validate(value,"Domicilio"));
+              resolve(this.validate(value, "Domicilio"));
             } else {
               resolve("Debes seleccionar una opcion valida");
             }
@@ -195,7 +195,7 @@ export default {
     },
     async validate(value, table) {
       axios
-        .post(devRuta+"/crearPedido", {
+        .post(devRuta + "/crearPedido", {
           pedido: [
             {
               total: this.getTotal,
@@ -221,7 +221,7 @@ export default {
     },
     getProductos() {
       axios
-        .get(devRuta+"/productos")
+        .get(devRuta + "/productos")
         .then((response) => {
           this.Productos = response.data["resp"][1];
         })
