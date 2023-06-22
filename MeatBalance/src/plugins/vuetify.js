@@ -23,7 +23,10 @@ export default createVuetify({
           grisOpaco:'#F3F3E3',
           comoRosado:'#FCA999',
           comoAzulrey:'#243264',
-          grisButton:'#a2a2a2'
+          grisButton:'#a2a2a2',
+          newPrimaryBlue:'#0f172a',
+          newSecondayBlue:'#3abff8',
+          newPrimaryBg:'#182730'
         },
       },
     },

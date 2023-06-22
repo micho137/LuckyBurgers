@@ -1,9 +1,9 @@
 <template>
   <v-app>
-    <v-app-bar color="comoNaranja">
+    <v-app-bar color="newPrimaryBlue">
       <NavbarVue/>
     </v-app-bar>
-    <v-main class="bg-grisOpaco">
+    <v-main class="bg-newPrimaryBg">
       <router-view/>
     </v-main>
   </v-app>

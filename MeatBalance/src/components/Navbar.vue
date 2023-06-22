@@ -1,5 +1,5 @@
 <template>
-  <v-container class="fill-height d-flex align-center">
+  <v-container class="fill-height d-flex align-center bg-newPrimaryBlue">
     <!-- <v-avatar class="mr-10 ml-4" color="grey-darken-1" size="32"></v-avatar> -->
     <v-img
       contain
@@ -10,7 +10,7 @@
       src="https://res.cloudinary.com/djdxi88e0/image/upload/v1670184495/meatbalance_lqntpv.png"
     ></v-img>
     <v-btn
-      color="#F3F3E3"
+      color="#3abff8"
       v-for="link in links"
       :key="link.title"
       v-on:click="goToRoute(link.route)"
@@ -19,7 +19,7 @@
       {{ link.title }}
     </v-btn>
   </v-container>
-  <v-btn v-if="onExit" @click="cerrarSesion()" style="background-color:white;color:#FC6C4C;">Salir</v-btn>
+  <v-btn v-if="onExit" @click="cerrarSesion()" style="background-color:white;color:#3abff8;">Salir</v-btn>
 </template>
 
 <script>

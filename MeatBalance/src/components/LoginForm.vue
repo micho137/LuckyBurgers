@@ -6,7 +6,7 @@
           <v-sheet
             min-height="70vh"
             rounded="lg"
-            class="pa-5 justify-center align-center d-flex"
+            class="pa-5 justify-center align-center d-flex bg-newPrimaryBlue" 
           >
             <v-card
               class="mx-auto px-6 py-8 bg-comoNaranja"
