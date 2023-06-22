@@ -47,7 +47,7 @@
           </v-select>
         </v-col>
 
-        <v-col cols="12" md="4">
+        <!-- <v-col cols="12" md="4">
           <v-select
             color="comoNaranja"
             v-model="tipoProducto"
@@ -57,7 +57,7 @@
             required
           >
           </v-select>
-        </v-col>
+        </v-col> -->
 
         <!-- <v-col cols="12" md="4" class="">
           <v-file-input
@@ -107,7 +107,7 @@ export default {
     descripcion: "",
     precio: "",
     //archivoPreview: "",
-    tipoProducto: "",
+    /* tipoProducto: "", */
     valid: true,
     nameRules: [(v) => !!v || "El nombre es requerido"],
     tipoRules: [(v) => !!v || "El tipo de producto es requerido"],
@@ -139,7 +139,7 @@ export default {
           descripcionProducto: this.descripcion,
           precio: this.precio,
           categoria: this.categoriaProducto,
-          tipoProducto: this.tipoProducto,
+          /* tipoProducto: this.tipoProducto, */
         }
         /* let data = new FormData();
         var file = this.archivo[0]

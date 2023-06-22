@@ -5,7 +5,7 @@
         <th class="text-center text-button">Producto</th>
         <th class="text-center text-button">Descripcion</th>
         <th class="text-center text-button">Categoria</th>
-        <th class="text-center text-button">Tipo Producto</th>
+        <!-- <th class="text-center text-button">Tipo Producto</th> -->
         <th class="text-center text-button">Precio</th>
         <th class="text-center text-button">Accion</th>
       </tr>
@@ -16,7 +16,7 @@
           nombreProducto,
           descripcionProducto,
           categoria,
-          tipoProducto,
+          /* tipoProducto, */
           precio,
           uid,
         } in Productos"
@@ -25,7 +25,7 @@
         <td>{{ nombreProducto }}</td>
         <td>{{ descripcionProducto }}</td>
         <td>{{ categoria.nombreCategoria }}</td>
-        <td>{{ tipoProducto }}</td>
+        <!-- <td>{{ tipoProducto }}</td> -->
         <td>${{ precio }}</td>
         <td>
           <div class="d-flex justify-center">
@@ -37,7 +37,7 @@
                   nombreProducto,
                   descripcionProducto,
                   categoria,
-                  tipoProducto,
+                  /* tipoProducto, */
                   precio,
                   uid
                 )
@@ -117,7 +117,7 @@ export default {
       nombreProducto,
       descripcionProducto,
       categoria,
-      tipoProducto,
+      /* tipoProducto, */
       precio,
       uid
     ) {
@@ -125,7 +125,7 @@ export default {
         nombreProducto,
         descripcionProducto,
         categoria,
-        tipoProducto,
+        /* tipoProducto, */
         precio,
       };
       this.$swal({
@@ -135,7 +135,7 @@ export default {
           `<div style="display:flex;justify-content:center;flex-direction:column;margin-bottom: 10px"><label><strong>Descripcion</strong></label><input style="text-align:center" value='${data.descripcionProducto}' placeholder="Descripcion" id="swal-input2" class="swal2-input"></div>` +
           `<div style="display:flex;justify-content:center;flex-direction:column;margin-bottom: 10px"><label><strong>Categoria</strong></label>
             <input style="text-align:center" value='${data.categoria.nombreCategoria}' placeholder="Categoria" id="swal-input3" class="swal2-input">` +
-          `<div style="display:flex;justify-content:center;flex-direction:column;margin-bottom: 10px"><label><strong>Tipo de Producto</strong></label><input style="text-align:center" value='${data.tipoProducto}' placeholder="Tipo de Producto" id="swal-input4" class="swal2-input"></div>` +
+          /* `<div style="display:flex;justify-content:center;flex-direction:column;margin-bottom: 10px"><label><strong>Tipo de Producto</strong></label><input style="text-align:center" value='${data.tipoProducto}' placeholder="Tipo de Producto" id="swal-input4" class="swal2-input"></div>` + */
           `<div style="display:flex;justify-content:center;flex-direction:column;margin-bottom: 10px"><label><strong>Precio</strong></label><input style="text-align:center" value='${data.precio}' placeholder="Precio" id="swal-input5" class="swal2-input"></div>`,
         showCancelButton: true,
         focusConfirm: false,
@@ -146,7 +146,7 @@ export default {
             document.getElementById("swal-input1").value === "" ||
             document.getElementById("swal-input2").value === "" ||
             document.getElementById("swal-input3").value === "" ||
-            document.getElementById("swal-input4").value === "" ||
+            /* document.getElementById("swal-input4").value === "" || */
             document.getElementById("swal-input5").value === ""
           ) {
             this.failed();
