@@ -1,5 +1,5 @@
 <template>
-  <v-table fixed-header height="70vh" class="text-center overflow-auto">
+  <v-table fixed-header height="70vh" class="text-center overflow-y-hidden">
     <thead>
       <tr>
         <th class="text-center text-button">Proveedor</th>

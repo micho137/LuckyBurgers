@@ -1,56 +1,21 @@
 <template>
-  <v-form class="mt-10" ref="form" v-model="valid" lazy-validation>
+  <v-form class="" ref="form" v-model="valid" lazy-validation>
     <v-container>
       <v-row class="d-flex flex-column align-center">
-        <v-col cols="12" md="4">
-          <v-text-field
-            v-model="nombreProveedor"
-            :rules="nameRules"
-            color="newSecondayBlue"
-            label="Nombre del proveedor"
-            required
-          ></v-text-field>
+        <v-col md="4">
+          <v-text-field v-model="nombreProveedor" :rules="nameRules" color="newSecondayBlue" label="Nombre del proveedor"
+            required></v-text-field>
+          <v-text-field v-model="descripcion" color="newSecondayBlue" :rules="descripcionRules" label="Descripcion"
+            required></v-text-field>
+          <v-text-field v-model="nit" color="newSecondayBlue" :rules="nitRules" label="NIT" required></v-text-field>
+
+          <v-text-field v-model="direccion" color="newSecondayBlue" :rules="direccionRules" label="Direccion"
+            required></v-text-field>
+
+          <v-text-field v-model="contacto" color="newSecondayBlue" :rules="contactoRules" label="Contacto"
+            required></v-text-field>
         </v-col>
 
-        <v-col cols="12" md="4">
-          <v-text-field
-            v-model="descripcion"
-            color="newSecondayBlue"
-            :rules="descripcionRules"
-            label="Descripcion"
-            required
-          ></v-text-field>
-        </v-col>
-
-        <v-col cols="12" md="4">
-          <v-text-field
-            v-model="nit"
-            color="newSecondayBlue"
-            :rules="nitRules"
-            label="NIT"
-            required
-          ></v-text-field>
-        </v-col>
-
-        <v-col cols="12" md="4">
-          <v-text-field
-            v-model="direccion"
-            color="newSecondayBlue"
-            :rules="direccionRules"
-            label="Direccion"
-            required
-          ></v-text-field>
-        </v-col>
-
-        <v-col cols="12" md="4">
-          <v-text-field
-            v-model="contacto"
-            color="newSecondayBlue"
-            :rules="contactoRules"
-            label="Contacto"
-            required
-          ></v-text-field>
-        </v-col>
         <div class="d-flex justify-center">
           <v-btn color="newSecondayBlue" class="mr-4" @click="validate">
             Registrar

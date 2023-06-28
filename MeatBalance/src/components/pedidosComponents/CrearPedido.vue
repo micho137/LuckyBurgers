@@ -231,11 +231,11 @@ export default {
       });
     },
     async validate(value, table) {
-      const primerObjeto = {
+      const primerObjeto =[ {
         mesa: table,
         tipoPedido: value,
         totalpedido: this.getTotal,
-      };
+      }];
       const segundoObjeto = this.pedidos.map((pedido) => {
         const descripcionFiltrada = pedido.descripcion.filter(Boolean); // Eliminar elementos vacíos en descripcion
         const adicionesNombres = pedido.adicion
@@ -246,12 +246,12 @@ export default {
           producto: pedido.uid,
           cantidad: pedido.cantidad,
           descripcion:
-            descripcionFiltrada.length > 0 ? descripcionFiltrada : "", // Obtener el primer elemento filtrado o cadena vacía
+            descripcionFiltrada.length > 0 ? descripcionFiltrada : [], // Obtener el primer elemento filtrado o cadena vacía
           adiciones: adicionesNombres.length > 0 ? adicionesNombres : [],
           precioDetalle: pedido.precio,
         };
       });
-      const datos = [primerObjeto, segundoObjeto];
+      const datos = primerObjeto.concat(segundoObjeto);
       axios
         .post(devRuta + "/crearPedido", {
           pedido: datos,

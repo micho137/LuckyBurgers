@@ -4,7 +4,7 @@
       <v-row class="d-flex flex-column align-center">
         <v-col cols="12" md="4">
           <v-text-field
-            color="comoNaranja"
+            color="newSecondayBlue"
             v-model="nombreCategoria"
             :rules="categoriaRules"
             label="Nombre de la categoria"
@@ -13,7 +13,7 @@
         </v-col>
         <v-col cols="12" md="4">
           <v-textarea
-            color="comoNaranja"
+            color="newSecondayBlue"
             no-resize=""
             v-model="descripcion"
             :rules="descripcionRules"
@@ -24,11 +24,11 @@
         </v-col>
       </v-row>
       <div class="d-flex justify-center mt-6">
-        <v-btn color="comoNaranja" class="mr-4" @click="validate">
+        <v-btn color="newSecondayBlue" class="mr-4" @click="validate">
           Registrar
         </v-btn>
 
-        <v-btn color="grey" class="mr-4" @click="reset"> Reset Form </v-btn>
+        <v-btn color="red" class="mr-4" @click="reset"> Reset Form </v-btn>
       </div>
     </v-container>
   </v-form>
