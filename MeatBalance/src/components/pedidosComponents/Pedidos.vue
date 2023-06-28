@@ -15,18 +15,12 @@
                   {{ opcion.title }}
                 </v-list-item-title>
               </v-list-item>
-
-              <v-divider class="my-2"></v-divider>
-
-              <v-list-item link>
-                <v-list-item-title @click="reload"> Refresh </v-list-item-title>
-              </v-list-item>
             </v-list>
           </v-sheet>
         </v-col>
 
         <v-col>
-          <v-sheet min-height="70vh" rounded="lg" class="pa-5">
+          <v-sheet height="70vh" rounded="lg" class="pa-5" color="newPrimaryBlue">
             <!--  -->
             <keep-alive>
               <component :is="current"></component>

@@ -3,10 +3,10 @@
     <thead>
       <tr>
         <th class="text-center text-button">Descripcion</th>
-        <th class="text-center text-button">Tipo Pedido</th>
+        <th class="text-center text-button">T.Pedido</th>
         <th class="text-center text-button">Mesa</th>
         <th class="text-center text-button">Total</th>
-        <th class="text-center text-button">Fecha Ingreso</th>
+        <th class="text-center text-button">Fecha</th>
         <th class="text-center text-button">Accion</th>
       </tr>
     </thead>
@@ -31,10 +31,10 @@
         </td>
         <td>
           <div class="d-flex justify-center">
-            <v-btn color="comoNaranja" class="mr-4" @click="goEdit(venta._id)">
+            <v-btn color="newSecondayBlue" class="mr-4" @click="goEdit(venta._id)">
               Editar
             </v-btn>
-            <v-btn color="grey" @click="showDeleteAlert(venta._id)">
+            <v-btn color="red" @click="showDeleteAlert(venta._id)">
               Eliminar
             </v-btn>
           </div>

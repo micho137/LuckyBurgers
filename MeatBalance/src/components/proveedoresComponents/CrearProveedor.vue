@@ -6,7 +6,7 @@
           <v-text-field
             v-model="nombreProveedor"
             :rules="nameRules"
-            color="comoNaranja"
+            color="newSecondayBlue"
             label="Nombre del proveedor"
             required
           ></v-text-field>
@@ -15,7 +15,7 @@
         <v-col cols="12" md="4">
           <v-text-field
             v-model="descripcion"
-            color="comoNaranja"
+            color="newSecondayBlue"
             :rules="descripcionRules"
             label="Descripcion"
             required
@@ -25,7 +25,7 @@
         <v-col cols="12" md="4">
           <v-text-field
             v-model="nit"
-            color="comoNaranja"
+            color="newSecondayBlue"
             :rules="nitRules"
             label="NIT"
             required
@@ -35,7 +35,7 @@
         <v-col cols="12" md="4">
           <v-text-field
             v-model="direccion"
-            color="comoNaranja"
+            color="newSecondayBlue"
             :rules="direccionRules"
             label="Direccion"
             required
@@ -45,18 +45,18 @@
         <v-col cols="12" md="4">
           <v-text-field
             v-model="contacto"
-            color="comoNaranja"
+            color="newSecondayBlue"
             :rules="contactoRules"
             label="Contacto"
             required
           ></v-text-field>
         </v-col>
         <div class="d-flex justify-center">
-          <v-btn color="comoNaranja" class="mr-4" @click="validate">
+          <v-btn color="newSecondayBlue" class="mr-4" @click="validate">
             Registrar
           </v-btn>
 
-          <v-btn color="grey" class="mr-4" @click="reset"> Reset Form </v-btn>
+          <v-btn color="red" class="mr-4" @click="reset"> Reset Form </v-btn>
         </div>
       </v-row>
     </v-container>

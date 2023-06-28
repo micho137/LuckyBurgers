@@ -2,67 +2,45 @@
   <v-container>
     <v-row>
       <v-col>
-        <v-sheet>
+        <v-sheet color="newPrimaryBlue">
           <v-form ref="form" v-model="valid" lazy-validation class="">
             <div class="d-flex flex-column">
-              <v-autocomplete
-                color="comoNaranja"
-                v-model="select"
-                :items="Productos"
-                item-value="[precio, nombreProducto, uid]"
-                item-title="nombreProducto"
-                label="Selecionar Producto"
-                :rules="[(v) => !!v || 'El producto es requerido']"
-                required
-                return-object
-              ></v-autocomplete>
+              <v-autocomplete color="newSecondayBlue" v-model="select" :items="Productos"
+                item-value="[precio, nombreProducto, uid]" item-title="nombreProducto" label="Selecionar Producto"
+                :rules="[(v) => !!v || 'El producto es requerido']" required return-object></v-autocomplete>
 
-              <v-text-field
-                color="comoNaranja"
-                v-model="number"
-                :rules="numberRules"
-                label="Cantidad"
-                required
-                min="1"
-                type="number"
-              ></v-text-field>
+              <v-text-field color="newSecondayBlue" v-model="number" :rules="numberRules" label="Cantidad" required
+                min="1" type="number"></v-text-field>
 
               <div class="d-flex flex-column justify-center">
-                <v-autocomplete
-                  color="comoNaranja"
-                  v-model="select"
-                  :items="Productos"
-                  item-value="[precio, nombreProducto, uid]"
-                  item-title="precio"
-                  label="Precio por unidad"
-                  disabled
-                  return-object
-                ></v-autocomplete>
+                <v-autocomplete color="newSecondayBlue" v-model="select" :items="Productos"
+                  item-value="[precio, nombreProducto, uid]" item-title="precio" label="Precio por unidad" disabled
+                  return-object></v-autocomplete>
               </div>
             </div>
 
             <div class="mt-4 d-flex justify-center">
-              <v-btn class="mr-2" color="comoNaranja" @click="add">
+              <v-btn class="mr-2" color="newSecondayBlue" @click="add">
                 Agregar
               </v-btn>
 
-              <v-btn color="grisButton" @click="reset"> Limpiar </v-btn>
+              <v-btn color="red" @click="reset"> Limpiar </v-btn>
             </div>
           </v-form>
         </v-sheet>
       </v-col>
       <v-col>
         <!-- ESPACIO -->
-        <v-sheet>
+        <v-sheet color="newPrimaryBlue">
           <tabla-vue :onDeletes="deletes" :Productos="pedidos" />
         </v-sheet>
         <!-- ESPACIO -->
-        <v-col class="d-flex justify-space-around border rounded-lg pa-2 mt-4">
+        <v-col class="d-flex justify-space-around border bg-white rounded-lg pa-2 mt-4">
           <div v-if="onSuccess" class="d-flex">
-            <v-btn color="comoNaranja" class="mr-4" @click="prueba()">
+            <v-btn color="newSecondayBlue" class="mr-4" @click="prueba()">
               Enviar Pedido
             </v-btn>
-            <v-btn @click="cleanTable" color="grisButton">
+            <v-btn @click="cleanTable" color="red">
               Limpiar Tabla
             </v-btn>
           </div>
@@ -108,12 +86,7 @@ export default {
       "Mesa 7",
       "Mesa 8",
       "Mesa 9",
-      "Mesa 10",
-      "Mesa 11",
-      "Mesa 12",
-      "Mesa 13",
-      "Mesa 14",
-      "Mesa 15",
+      "Mesa 10"
     ],
     number: "",
     numberRules: [(v) => !!v || "Cantidad es requerida"],

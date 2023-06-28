@@ -3,11 +3,11 @@
     <!-- <v-avatar class="mr-10 ml-4" color="grey-darken-1" size="32"></v-avatar> -->
     <v-img
       contain
-      lazy-src="https://res.cloudinary.com/djdxi88e0/image/upload/v1670184495/meatbalance_lqntpv.png"
-      max-height="75"
+      lazy-src="https://res.cloudinary.com/djdxi88e0/image/upload/v1687549212/login_logo_mfrg0n.svg"
+      max-height="60"
       max-width="79"
       class="mx-5"
-      src="https://res.cloudinary.com/djdxi88e0/image/upload/v1670184495/meatbalance_lqntpv.png"
+      src="https://res.cloudinary.com/djdxi88e0/image/upload/v1687549212/login_logo_mfrg0n.svg"
     ></v-img>
     <v-btn
       color="#3abff8"

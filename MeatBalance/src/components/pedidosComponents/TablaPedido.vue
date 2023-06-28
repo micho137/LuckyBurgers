@@ -1,5 +1,5 @@
 <template>
-  <v-table fixed-header height="500px" class="border rounded-lg">
+  <v-table fixed-header height="50vh" class="border rounded-lg">
     <thead>
       <tr>
         <th class="text-center text-button">Producto</th>
@@ -21,7 +21,7 @@
         <td>${{ precio }}</td>
         <td>
           <div class="d-flex justify-center">
-            <v-btn color="grey" @click="onDeletes(index)"> Eliminar </v-btn>
+            <v-btn color="red" @click="onDeletes(index)"> Eliminar </v-btn>
           </div>
         </td>
       </tr>

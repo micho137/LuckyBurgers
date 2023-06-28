@@ -1,5 +1,5 @@
 <template>
-  <v-table fixed-header height="700px" class="text-center overflow-auto">
+  <v-table fixed-header height="70vh" class="text-center overflow-auto">
     <thead>
       <tr>
         <th class="text-center text-button">Proveedor</th>
@@ -30,7 +30,7 @@
         <td>
           <div class="d-flex justify-center">
             <v-btn
-              color="comoNaranja"
+              color="newSecondayBlue"
               class="mr-4"
               @click="
                 showEditAlert(
@@ -45,7 +45,7 @@
             >
               Editar
             </v-btn>
-            <v-btn color="grey" class="" @click="showDeleteAlert(uidProveedor)">
+            <v-btn color="red" class="" @click="showDeleteAlert(uidProveedor)">
               Eliminar
             </v-btn>
           </div>
