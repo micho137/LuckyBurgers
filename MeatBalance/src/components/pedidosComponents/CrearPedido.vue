@@ -43,7 +43,7 @@
                 label="Agregar adicion"
                 return-object
                 item-title="nombreProducto"
-                item-value="[nombreProducto, precio, categoria, uid]"
+                item-value="[nombreProducto, precio]"
               ></v-autocomplete>
 
               <div class="d-flex flex-column justify-center">
@@ -102,11 +102,22 @@ import TablaVue from "../pedidosComponents/TablaPedido.vue";
 const devRuta = import.meta.env.VITE_APP_RUTA_API;
 export default {
   computed: {
-    getTotal() {
+    /* getTotal() {
       let total = 0;
       this.pedidos.forEach((e) => {
-        total += e.precio;
+        total += e.precio
       });
+      return total;
+    }, */
+    getTotal() {
+      let total = 0;
+
+      this.pedidos.forEach((pedido) => {
+        const precioPedido = pedido.precio;
+        const precioAdicion = pedido.adicion[1] ? pedido.adicion[1].precio : 0;
+        total += precioPedido + precioAdicion;
+      });
+      console.log(total);
       return total;
     },
   },
@@ -196,7 +207,6 @@ export default {
       });
     },
     async prueba() {
-      console.log(this.pedidos);
       await this.$swal({
         title: "Selecciona el tipo de pedido",
         input: "select",
@@ -221,24 +231,30 @@ export default {
       });
     },
     async validate(value, table) {
+      const primerObjeto = {
+        mesa: table,
+        tipoPedido: value,
+        totalpedido: this.getTotal,
+      };
+      const segundoObjeto = this.pedidos.map((pedido) => {
+        const descripcionFiltrada = pedido.descripcion.filter(Boolean); // Eliminar elementos vacíos en descripcion
+        const adicionesNombres = pedido.adicion
+          ? pedido.adicion.map((adic) => adic.nombreProducto) // Obtener solo los nombres de las adiciones
+          : [];
+        adicionesNombres.shift();
+        return {
+          producto: pedido.uid,
+          cantidad: pedido.cantidad,
+          descripcion:
+            descripcionFiltrada.length > 0 ? descripcionFiltrada : "", // Obtener el primer elemento filtrado o cadena vacía
+          adiciones: adicionesNombres.length > 0 ? adicionesNombres : [],
+          precioDetalle: pedido.precio,
+        };
+      });
+      const datos = [primerObjeto, segundoObjeto];
       axios
         .post(devRuta + "/crearPedido", {
-          pedido: [
-            {
-              mesa: table,
-              tipoPedido: value,
-              total: this.getTotal,
-            },
-            this.pedidos.map((pedido) => {
-              return {
-                producto: pedido.uid,
-                cantidad: pedido.cantidad,
-                descripcion:pedido.descripcion,
-                adiciones:pedido.adicion,
-                precioDetalle: pedido.precio,
-              };
-            }),
-          ],
+          pedido: datos,
         })
         .then(() => {
           this.showRegisterAlert();
@@ -247,6 +263,7 @@ export default {
         .catch((e) => {
           this.failed();
         });
+      console.log(datos);
     },
     getProductos() {
       axios
@@ -261,7 +278,6 @@ export default {
         .get(devRuta + "/adiciones")
         .then((response) => {
           this.Adicion = response.data;
-          console.log(this.Adicion);
         })
         .catch((t) => console.log(t));
     },
@@ -271,9 +287,11 @@ export default {
         this.pedidos.push({
           producto: this.select.nombreProducto,
           cantidad: this.number,
-          precio: this.select.precio * this.number,
-          descripcion:this.descripcionP,
-          adicion:this.adiciones,
+          precio:
+            this.select.precio * this.number +
+            this.Adicion[1].precio * this.number,
+          descripcion: this.descripcionP,
+          adicion: this.adiciones,
           uid: this.select.uid,
         });
         this.reset();
@@ -299,4 +317,3 @@ export default {
   },
 };
 </script>
-
