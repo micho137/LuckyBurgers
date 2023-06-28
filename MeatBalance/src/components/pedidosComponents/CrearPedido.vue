@@ -5,21 +5,62 @@
         <v-sheet color="newPrimaryBlue">
           <v-form ref="form" v-model="valid" lazy-validation class="">
             <div class="d-flex flex-column">
-              <v-autocomplete color="newSecondayBlue" v-model="select" :items="Productos"
-                item-value="[precio, nombreProducto, uid]" item-title="nombreProducto" label="Selecionar Producto"
-                :rules="[(v) => !!v || 'El producto es requerido']" required return-object></v-autocomplete>
+              <v-autocomplete
+                color="newSecondayBlue"
+                v-model="select"
+                :items="Productos"
+                item-value="[precio, nombreProducto, uid]"
+                item-title="nombreProducto"
+                label="Selecionar Producto"
+                :rules="[(v) => !!v || 'El producto es requerido']"
+                required
+                return-object
+              ></v-autocomplete>
 
-              <v-text-field color="newSecondayBlue" v-model="number" :rules="numberRules" label="Cantidad" required
-                min="1" type="number"></v-text-field>
+              <v-text-field
+                color="newSecondayBlue"
+                v-model="number"
+                :rules="numberRules"
+                label="Cantidad"
+                required
+                min="1"
+                type="number"
+              ></v-text-field>
+
+              <v-autocomplete
+                multiple
+                color="newSecondayBlue"
+                v-model="descripcionP"
+                :items="descripcion"
+                label="Agregar descripcion"
+              ></v-autocomplete>
+
+              <v-autocomplete
+                multiple
+                color="newSecondayBlue"
+                v-model="adiciones"
+                :items="Adicion"
+                label="Agregar adicion"
+                return-object
+                item-title="nombreProducto"
+                item-value="[nombreProducto, precio, categoria, uid]"
+              ></v-autocomplete>
 
               <div class="d-flex flex-column justify-center">
-                <v-autocomplete color="newSecondayBlue" v-model="select" :items="Productos"
-                  item-value="[precio, nombreProducto, uid]" item-title="precio" label="Precio por unidad" disabled
-                  return-object></v-autocomplete>
+                <v-autocomplete
+                  color="newSecondayBlue"
+                  v-model="select"
+                  :items="Productos"
+                  item-value="[precio, nombreProducto, uid]"
+                  item-title="precio"
+                  label="Precio por unidad"
+                  disabled
+                  return-object
+                ></v-autocomplete>
               </div>
             </div>
 
-            <div class="mt-4 d-flex justify-center">
+            <div class="d-flex justify-center">
               <v-btn class="mr-2" color="newSecondayBlue" @click="add">
                 Agregar
               </v-btn>
@@ -35,14 +76,14 @@
           <tabla-vue :onDeletes="deletes" :Productos="pedidos" />
         </v-sheet>
         <!-- ESPACIO -->
-        <v-col class="d-flex justify-space-around border bg-white rounded-lg pa-2 mt-4">
+        <v-col
+          class="d-flex justify-space-around border bg-white rounded-lg pa-2 mt-4"
+        >
           <div v-if="onSuccess" class="d-flex">
             <v-btn color="newSecondayBlue" class="mr-4" @click="prueba()">
               Enviar Pedido
             </v-btn>
-            <v-btn @click="cleanTable" color="red">
-              Limpiar Tabla
-            </v-btn>
+            <v-btn @click="cleanTable" color="red"> Limpiar Tabla </v-btn>
           </div>
           <div class="">
             <v-sheet class="text-button font-weight-bold">
@@ -54,7 +95,7 @@
     </v-row>
   </v-container>
 </template>
-  
+
 <script>
 import axios from "axios";
 import TablaVue from "../pedidosComponents/TablaPedido.vue";
@@ -69,33 +110,45 @@ export default {
       return total;
     },
   },
-  data: () => ({
-    valid: true,
-    onSuccess: false,
-    onClean: false,
-    datos: [],
-    Productos: [],
-    pedidos: [],
-    mesas: [
-      "Mesa 1",
-      "Mesa 2",
-      "Mesa 3",
-      "Mesa 4",
-      "Mesa 5",
-      "Mesa 6",
-      "Mesa 7",
-      "Mesa 8",
-      "Mesa 9",
-      "Mesa 10"
-    ],
-    number: "",
-    numberRules: [(v) => !!v || "Cantidad es requerida"],
-    select: "",
-  }),
+  data() {
+    return {
+      valid: true,
+      onSuccess: false,
+      onClean: false,
+      datos: [],
+      Productos: [],
+      pedidos: [],
+      descripcion: [
+        "Sin salsas",
+        "Sin cebolla",
+        "Sin lechuga",
+        "Sin tomate",
+        "Sin queso",
+      ],
+      Adicion: [],
+      mesas: [
+        "Mesa 1",
+        "Mesa 2",
+        "Mesa 3",
+        "Mesa 4",
+        "Mesa 5",
+        "Mesa 6",
+        "Mesa 7",
+        "Mesa 8",
+        "Mesa 9",
+        "Mesa 10",
+      ],
+      number: "",
+      descripcionP: "",
+      adiciones: "",
+      numberRules: [(v) => !!v || "Cantidad es requerida"],
+      select: "",
+    };
+  },
   methods: {
     cleanTable() {
       this.pedidos = [];
-      if ((this.onSuccess = true)) {
+      if (this.onSuccess === true) {
         this.onSuccess = false;
       }
     },
@@ -143,6 +196,7 @@ export default {
       });
     },
     async prueba() {
+      console.log(this.pedidos);
       await this.$swal({
         title: "Selecciona el tipo de pedido",
         input: "select",
@@ -171,15 +225,17 @@ export default {
         .post(devRuta + "/crearPedido", {
           pedido: [
             {
-              total: this.getTotal,
-              tipoPedido: value,
               mesa: table,
+              tipoPedido: value,
+              total: this.getTotal,
             },
             this.pedidos.map((pedido) => {
               return {
                 producto: pedido.uid,
-                precioDetalle: pedido.precio,
                 cantidad: pedido.cantidad,
+                descripcion:pedido.descripcion,
+                adiciones:pedido.adicion,
+                precioDetalle: pedido.precio,
               };
             }),
           ],
@@ -200,6 +256,15 @@ export default {
         })
         .catch((t) => console.log(t));
     },
+    getAdiciones() {
+      axios
+        .get(devRuta + "/adiciones")
+        .then((response) => {
+          this.Adicion = response.data;
+          console.log(this.Adicion);
+        })
+        .catch((t) => console.log(t));
+    },
     async add() {
       const { valid } = await this.$refs.form.validate();
       if (valid) {
@@ -207,6 +272,8 @@ export default {
           producto: this.select.nombreProducto,
           cantidad: this.number,
           precio: this.select.precio * this.number,
+          descripcion:this.descripcionP,
+          adicion:this.adiciones,
           uid: this.select.uid,
         });
         this.reset();
@@ -228,6 +295,8 @@ export default {
   },
   mounted() {
     this.getProductos();
+    this.getAdiciones();
   },
 };
 </script>
+
