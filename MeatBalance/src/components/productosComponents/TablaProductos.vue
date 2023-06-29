@@ -48,10 +48,10 @@
     </tbody>
   </v-table>
 </template>
-  
+
 <script>
 import axios from "axios";
-const devRuta = import.meta.env.VITE_APP_RUTA_API
+const devRuta = import.meta.env.VITE_APP_RUTA_API;
 export default {
   data() {
     return {
@@ -73,11 +73,11 @@ export default {
         el.value = opt;
         select.append(el);
       }
-      return 
+      return;
     },
     getProductos() {
       axios
-        .get(devRuta+"/productos")
+        .get(devRuta + "/productos")
         .then((response) => {
           this.Productos = response.data["resp"][1];
         })
@@ -85,7 +85,7 @@ export default {
     },
     async deleteProducto(id) {
       await axios
-        .delete(devRuta+"/delete/productos/" + id)
+        .delete(devRuta + "/delete/productos/" + id)
         .then((response) => {
           this.getProductos();
         });
@@ -109,11 +109,10 @@ export default {
         showConfirmButton: true,
       });
     },
-    showEditAlert(
+    async showEditAlert(
       nombreProducto,
       descripcionProducto,
       categoria,
-      /* tipoProducto, */
       precio,
       uid
     ) {
@@ -121,28 +120,33 @@ export default {
         nombreProducto,
         descripcionProducto,
         categoria,
-        /* tipoProducto, */
         precio,
+        uid,
       };
+      const categoriaArray = JSON.parse(JSON.stringify(this.Category));
       this.$swal({
         title: "Editar producto",
         html:
           `<div style="display:flex;justify-content:center;flex-direction:column;margin-bottom: 10px"><label><strong>Nombre del Producto</strong></label><input style="text-align:center" value='${data.nombreProducto}' placeholder="Nombre del Producto" id="swal-input1" class="swal2-input"></div>` +
           `<div style="display:flex;justify-content:center;flex-direction:column;margin-bottom: 10px"><label><strong>Descripcion</strong></label><input style="text-align:center" value='${data.descripcionProducto}' placeholder="Descripcion" id="swal-input2" class="swal2-input"></div>` +
           `<div style="display:flex;justify-content:center;flex-direction:column;margin-bottom: 10px"><label><strong>Categoria</strong></label>
-            <input style="text-align:center" value='${data.categoria.nombreCategoria}' placeholder="Categoria" id="swal-input3" class="swal2-input">` +
-          /* `<div style="display:flex;justify-content:center;flex-direction:column;margin-bottom: 10px"><label><strong>Tipo de Producto</strong></label><input style="text-align:center" value='${data.tipoProducto}' placeholder="Tipo de Producto" id="swal-input4" class="swal2-input"></div>` + */
+            <select id="swal-input3" class="swal2-input">` +
+          categoriaArray.map(
+            (categoria) =>
+              `<option value="${categoria.uid}">${categoria.nombreCategoria}</option>`
+          ) +
+          `</select>` +
           `<div style="display:flex;justify-content:center;flex-direction:column;margin-bottom: 10px"><label><strong>Precio</strong></label><input style="text-align:center" value='${data.precio}' placeholder="Precio" id="swal-input5" class="swal2-input"></div>`,
         showCancelButton: true,
         focusConfirm: false,
         confirmButtonText: "Editar",
         confirmButtonColor: "#FC6C4C",
         preConfirm: () => {
+          console.log(document.getElementById("swal-input3").value);
           if (
             document.getElementById("swal-input1").value === "" ||
             document.getElementById("swal-input2").value === "" ||
             document.getElementById("swal-input3").value === "" ||
-            /* document.getElementById("swal-input4").value === "" || */
             document.getElementById("swal-input5").value === ""
           ) {
             this.failed();
@@ -152,11 +156,14 @@ export default {
                 document.getElementById("swal-input1").value),
               (data.descripcionProducto =
                 document.getElementById("swal-input2").value),
+                (data.categoria =
+                document.getElementById("swal-input3").value),
               (data.precio = document.getElementById("swal-input5").value),
               axios
                 .put(`${devRuta}/editar/productos/` + uid, {
                   nombreProducto: data.nombreProducto,
                   descripcionProducto: data.descripcionProducto,
+                  categoria: data.categoria,
                   precio: data.precio,
                 })
                 .then((Response) => {
@@ -189,18 +196,18 @@ export default {
         }
       });
     },
-    getCategorias() {
-      axios
-        .get(devRuta+"/categorias")
-        .then((response) => {
-          this.Category = response.data["resp"][1].map((obj) => {
-            return {
-              uid: obj["uid"],
-              nombreCategoria: obj["nombreCategoria"],
-            };
-          });
-        })
-        .catch((t) => console.log(t));
+    async getCategorias() {
+      try {
+        const response = await axios.get(devRuta + "/categorias");
+        this.Category = response.data["resp"][1].map((obj) => {
+          return {
+            uid: obj["uid"],
+            nombreCategoria: obj["nombreCategoria"],
+          };
+        });
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
   mounted() {
@@ -209,4 +216,3 @@ export default {
   },
 };
 </script>
-  

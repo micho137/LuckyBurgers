@@ -1,200 +1,127 @@
 <template>
-  <v-main class="h-100">
+  <v-sheet
+    rounded="lg"
+    class="d-flex flex-column h-100 pt-10"
+    color="newPrimaryBlue"
+  >
     <v-container>
       <v-row>
         <v-col>
-          <v-sheet
-            height="70vh"
-            rounded="lg"
-            class="pa-5 d-flex justify-center align-center"
-          >
-            <v-col>
-              <v-container>
-                <v-row>
-                  <v-col class="d-flex flex-column justify-center">
-                    <div v-if="Pedidos.length>0" style="text-transform: uppercase;" class="d-flex justify-center mb-2">
-                      <label class="text-center mr-10">Tipo Pedido: <strong>{{ Pedidos[0].venta.tipoPedido }}</strong></label>
-                      <label class="text-center ">Mesa: <strong>{{ Pedidos[0].venta.mesa }}</strong></label>
-                    </div>
-                    <!-- ESPACIO -->
-                    <v-sheet>
-                      <v-table
-                        fixed-header
-                        class="border rounded-lg"
-                      >
-                        <thead>
-                          <tr>
-                            <th class="text-center text-button">Producto</th>
-                            <th class="text-center text-button">Cantidad</th>
-                            <th class="text-center text-button">Precio</th>
-                            <th class="text-center text-button">Accion</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr
-                            v-for="(
-                              { producto, cantidad, precioDetalle, venta },
-                              index
-                            ) in Pedidos"
-                            :key="index"
-                            class="text-center"
-                          >
-                            <td>{{ producto.nombreProducto }}</td>
+          <v-sheet color="newPrimaryBlue">
+            <v-form ref="form" v-model="valid" lazy-validation class="">
+              <div class="d-flex flex-column">
+                <v-autocomplete
+                  color="newSecondayBlue"
+                  v-model="select"
+                  :items="Productos"
+                  item-value="[precio, nombreProducto, uid]"
+                  item-title="nombreProducto"
+                  label="Selecionar Producto"
+                  :rules="[(v) => !!v || 'El producto es requerido']"
+                  required
+                  return-object
+                ></v-autocomplete>
 
-                            <td>{{ cantidad }}</td>
+                <v-text-field
+                  color="newSecondayBlue"
+                  v-model="number"
+                  :rules="numberRules"
+                  label="Cantidad"
+                  required
+                  min="1"
+                  type="number"
+                ></v-text-field>
 
-                            <td>${{ precioDetalle }}</td>
-                            <td>
-                              <div class="d-flex justify-center">
-                                <v-btn
-                                  @click="
-                                    passDatatoEdit(
-                                      producto.nombreProducto,
-                                      cantidad,
-                                      precioDetalle,
-                                      venta.tipoPedido,
-                                      venta.mesa
-                                    )
-                                  "
-                                  class="mr-2"
-                                  color="comoNaranja"
-                                >
-                                  Editar
-                                </v-btn>
-                                <v-btn color="grey" @click="deletes(index)">
-                                  Eliminar
-                                </v-btn>
-                              </div>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </v-table>
-                    </v-sheet>
-                    <!-- ESPACIO -->
-                    <v-col
-                      class="
-                        d-flex
-                        justify-space-around
-                        border
-                        rounded-lg
-                        pa-2
-                        mt-4
-                      "
-                    >
-                      <!-- <div class="d-flex">
-                        <v-btn color="comoNaranja" class="mr-4" @click="prueba">
-                          Enviar Pedido
-                        </v-btn>
-                        <v-btn color="grisButton"> Limpiar Tabla </v-btn>
-                      </div> -->
-                      <div class="">
-                        <v-sheet class="text-button font-weight-bold">
-                          Total: ${{ getTotal }}
-                        </v-sheet>
-                      </div>
-                    </v-col>
-                  </v-col>
+                <v-autocomplete
+                  multiple
+                  color="newSecondayBlue"
+                  v-model="descripcionP"
+                  :items="descripcion"
+                  label="Agregar descripcion"
+                ></v-autocomplete>
 
-                  <v-col>
-                    <v-sheet>
-                      <v-form ref="form" v-model="valid" lazy-validation>
-                        <v-container>
-                          <v-row class="d-flex flex-column align-center">
-                            <v-col cols="12" md="8">
-                              <v-autocomplete
-                                color="comoNaranja"
-                                v-model="select"
-                                :items="Productos"
-                                item-value="[precio, nombreProducto, uid]"
-                                item-title="nombreProducto"
-                                label="Producto"
-                                :rules="[
-                                  (v) => !!v || 'El producto es requerido',
-                                ]"
-                                required
-                                return-object
-                              ></v-autocomplete>
-                            </v-col>
+                <v-autocomplete
+                  multiple
+                  color="newSecondayBlue"
+                  v-model="adiciones"
+                  :items="Adicion"
+                  label="Agregar adicion"
+                  return-object
+                  item-title="nombreProducto"
+                  item-value="[nombreProducto, precio]"
+                ></v-autocomplete>
+              </div>
 
-                            <v-col cols="12" md="8">
-                              <v-text-field
-                                color="comoNaranja"
-                                v-model="number"
-                                label="Cantidad"
-                                required
-                                min="1"
-                                type="number"
-                              ></v-text-field>
-                            </v-col>
+              <div class="d-flex justify-center">
+                <v-btn class="mr-2" color="newSecondayBlue" @click="add">
+                  Agregar
+                </v-btn>
 
-                            <v-col class="hola" cols="12" md="8">
-                              <v-autocomplete
-                                color="comoNaranja"
-                                v-model="precio"
-                                :items="Productos"
-                                item-value="[precio, nombreProducto, uid]"
-                                item-title="precio"
-                                label="Precio por unidad"
-                                disabled
-                                return-object
-                              ></v-autocomplete>
-                            </v-col>
-                          </v-row>
-                          <div class="d-flex justify-center mt-6">
-                            <v-btn
-                              color="comoNaranja"
-                              class="mr-4"
-                            >
-                              Editar Producto
-                            </v-btn>
-                            <v-btn color="grey" class="mr-4" @click="add()">
-                              Agregar
-                            </v-btn>
-                          </div>
-                          <div class="d-flex justify-center mt-6">
-                            <v-btn
-                              color="comoNaranja"
-                              class="mr-4"
-                              @click="prueba()"
-                            >
-                              Actualizar Pedido
-                            </v-btn>
-                            <v-btn color="grey" class="mr-4" @click="reset()">
-                              Reset Form
-                            </v-btn>
-                          </div>
-                        </v-container>
-                      </v-form>
-                    </v-sheet>
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-col>
+                <v-btn color="red" @click="reset"> Limpiar </v-btn>
+              </div>
+            </v-form>
           </v-sheet>
+        </v-col>
+        <v-col>
+          <!-- ESPACIO -->
+          <v-sheet color="newPrimaryBlue">
+            <tabla-vue :onDeletes="deletes" :Productos="pedidos" />
+          </v-sheet>
+          <!-- ESPACIO -->
+          <v-col
+            class="d-flex justify-space-around border bg-white rounded-lg pa-2 mt-4"
+          >
+            <div v-if="onSuccess" class="d-flex">
+              <v-btn color="newSecondayBlue" class="mr-4" @click="prueba()">
+                Enviar Pedido
+              </v-btn>
+              <v-btn @click="cleanTable" color="red"> Limpiar Tabla </v-btn>
+            </div>
+            <div class="">
+              <v-sheet class="text-button font-weight-bold">
+                Total: ${{ getTotal }}
+              </v-sheet>
+            </div>
+          </v-col>
         </v-col>
       </v-row>
     </v-container>
-  </v-main>
+  </v-sheet>
 </template>
 
 <script>
 import axios from "axios";
+import TablaVue from "../pedidosComponents/TablaPedido.vue";
 const devRuta = import.meta.env.VITE_APP_RUTA_API;
 export default {
   computed: {
     getTotal() {
       let total = 0;
-      this.Pedidos.forEach((e) => {
-        total += e.precioDetalle;
+      this.pedidos.forEach((pedido) => {
+        const precioPedido = pedido.precio;
+        const precioAdicion = pedido.adicion[1] ? pedido.adicion[1].precio : 0;
+        total += precioPedido + precioAdicion;
       });
       return total;
     },
   },
   data() {
     return {
-      Pedidos: [],
+      valid: true,
+      onSuccess: false,
+      onClean: false,
+      datos: [],
       Productos: [],
-      tipo: ["Local", "Domicilio"],
+      pedidos: [],
+      pedidosCompleto:[],
+      descripcion: [
+        "Sin salsas",
+        "Sin cebolla",
+        "Sin lechuga",
+        "Sin tomate",
+        "Sin queso",
+      ],
+      Adicion: [],
       mesas: [
         "Mesa 1",
         "Mesa 2",
@@ -206,18 +133,28 @@ export default {
         "Mesa 8",
         "Mesa 9",
         "Mesa 10",
-        "Mesa 11",
-        "Mesa 12",
-        "Mesa 13",
-        "Mesa 14",
-        "Mesa 15",
       ],
-      precio: "",
       number: "",
+      descripcionP: "",
+      adiciones: "",
+      numberRules: [(v) => !!v || "Cantidad es requerida"],
       select: "",
     };
   },
   methods: {
+    cleanTable() {
+      this.pedidos = [];
+      if (this.onSuccess === true) {
+        this.onSuccess = false;
+      }
+    },
+    activate() {
+      if (this.pedidos.length > 0) {
+        this.onSuccess = true;
+      } else {
+        this.onSuccess = false;
+      }
+    },
     failed() {
       this.$swal({
         icon: "error",
@@ -225,11 +162,11 @@ export default {
         text: "Algo no ha salido bien",
       });
     },
-    showEditAlert() {
+    showRegisterAlert() {
       this.$swal({
         position: "top-end",
         icon: "success",
-        title: "Pedido Editado exitosamente",
+        title: "Pedido registrado exitosamente",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -279,39 +216,42 @@ export default {
       });
     },
     async validate(value, table) {
-      const idPedido = localStorage.getItem("idPedido");
+      const primerObjeto = [
+        {
+          mesa: table,
+          tipoPedido: value,
+          totalpedido: this.getTotal,
+        },
+      ];
+      const segundoObjeto = this.pedidos.map((pedido) => {
+        console.log(pedido);
+        const descripcionFiltrada = pedido.descripcion.filter(Boolean); // Eliminar elementos vacíos en descripcion
+        const adicionesNombres = pedido.adicion
+          ? pedido.adicion.map((adic) => adic.nombreProducto) // Obtener solo los nombres de las adiciones
+          : [];
+        adicionesNombres.shift();
+        return {
+          producto: this.pedidosCompleto.productos,
+          cantidad: pedido.cantidad,
+          descripcion:
+            descripcionFiltrada.length > 0 ? descripcionFiltrada : [], // Obtener el primer elemento filtrado o cadena vacía
+          adiciones: adicionesNombres.length > 0 ? adicionesNombres : [],
+          precioDetalle: pedido.precio,
+        };
+      });
+      const datos = primerObjeto.concat(this.pedidosCompleto);
       axios
-        .post(`${devRuta}/editarPedidoCompleto/${idPedido}`, {
-          pedido: [
-            {
-              total: this.getTotal,
-              tipoPedido: value,
-              mesa: table,
-            },
-            this.Pedidos.map((pedido) => {
-              return {
-                producto: pedido.uid,
-                precioDetalle: pedido.precio,
-                cantidad: pedido.cantidad,
-              };
-            }),
-          ],
+        .put(devRuta + `/editarPedido/${this.getIdParam()}`, {
+          pedido: datos,
         })
         .then(() => {
-          this.showEditAlertAlert();
+          this.showRegisterAlert();
+          this.cleanTable();
         })
         .catch((e) => {
           this.failed();
         });
-    },
-    async getPedidos() {
-      const idPedido = localStorage.getItem("idPedido");
-      await axios
-        .get(`${devRuta}/infoTablaEditar/${idPedido}`)
-        .then((response) => {
-          this.Pedidos = response.data["tabla"];
-        })
-        .catch((t) => console.log(t));
+      console.log(datos);
     },
     getProductos() {
       axios
@@ -321,38 +261,75 @@ export default {
         })
         .catch((t) => console.log(t));
     },
-    passDatatoEdit(p, c) {
-      const data = {
-        p,
-        c,
-      };
-      this.select = data.p;
-      this.number = data.c;
-    },
-    add(){
-      this.Pedidos.push({
-          producto: {
-            nombreProducto:this.select.nombreProducto
-          },
-          cantidad: this.number,
-          precioDetalle: this.select.precio * this.number,
-          uid: this.select.uid
+    getAdiciones() {
+      axios
+        .get(devRuta + "/adiciones")
+        .then((response) => {
+          this.Adicion = response.data;
         })
-        this.reset()
+        .catch((t) => console.log(t));
     },
-    deletes(index) {
-      this.Pedidos = this.Pedidos.filter(
-        (producto, pIndex) => pIndex !== index
+
+    async getPedido() {
+      let response = await axios.get(
+        devRuta + `/productos/pedido/${this.getIdParam()}`
       );
+      this.pedidosCompleto = response.data.map((pedido) => ({
+        producto: pedido.producto.uid,
+        cantidad: pedido.cantidad,
+        descripcion:pedido.descripcion,
+        adicion: pedido.adiciones.map((adicion) => ({
+          nombreProducto:adicion
+        })),
+        precio:pedido.precioDetalle
+      }))
+      this.pedidos = response.data.map((pedido) => ({
+        producto: pedido.producto.nombreProducto,
+        cantidad: pedido.cantidad,
+        descripcion:pedido.descripcion,
+        adicion: pedido.adiciones.map((adicion) => ({
+          nombreProducto:adicion
+        })),
+        precio:pedido.precioDetalle
+      }));
+    },
+    async add() {
+      const { valid } = await this.$refs.form.validate();
+      if (valid) {
+        this.pedidos.push({
+          producto: this.select.nombreProducto,
+          cantidad: this.number,
+          precio:
+            this.select.precio * this.number +
+            this.Adicion[0].precio * this.number,
+          descripcion: this.descripcionP,
+          adicion: this.adiciones,
+          uid: this.select.uid,
+        });
+        this.reset();
+        this.activate();
+      }
     },
     reset() {
       this.$refs.form.reset();
     },
+    deletes(index) {
+      this.pedidos = this.pedidos.filter(
+        (producto, pIndex) => pIndex !== index
+      );
+      this.activate();
+    },
+    getIdParam() {
+      return this.$route.params.id;
+    },
+  },
+  components: {
+    TablaVue,
   },
   mounted() {
-    this.getPedidos();
-    this.getProductos()
+    this.getPedido();
+    this.getProductos();
+    this.getAdiciones();
   },
 };
 </script>
-

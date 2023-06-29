@@ -31,9 +31,6 @@
         </td>
         <td>
           <div class="d-flex justify-center">
-            <v-btn color="newSecondayBlue" class="mr-4" @click="goEdit(venta._id)">
-              Editar
-            </v-btn>
             <v-btn color="red" @click="showDeleteAlert(venta._id)">
               Eliminar
             </v-btn>
@@ -64,7 +61,7 @@ export default {
     },
     async deletePedido(uid) {
       await axios
-        .delete(devRuta+"/borrar/venta/" + uid)
+        .delete(devRuta+"/borrarPedido/" + uid)
         .then(() => this.getPedidos())
         .catch((t) => this.failed());
     },

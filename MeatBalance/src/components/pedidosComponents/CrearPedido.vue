@@ -276,7 +276,7 @@ export default {
           cantidad: this.number,
           precio:
             this.select.precio * this.number +
-            this.Adicion[1].precio * this.number,
+            (this.Adicion[0].precio * this.number),
           descripcion: this.descripcionP,
           adicion: this.adiciones,
           uid: this.select.uid,

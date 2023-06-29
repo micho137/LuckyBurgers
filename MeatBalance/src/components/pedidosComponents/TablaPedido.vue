@@ -22,7 +22,10 @@
 
         <td>{{ cantidad }}</td>
 
-        <td>{{ descripcion.filter(Boolean).join(", ") }}</td>
+        <td v-if="descripcion && descripcion.filter(Boolean).length > 0">
+          {{ descripcion.filter(Boolean).join(", ") }}
+        </td>
+        <td v-else>Sin Descripción</td>
 
         <td>{{ getAdicionesNombres(adicion) }}</td>
 
