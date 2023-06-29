@@ -73,6 +73,7 @@ export default {
         icon: "error",
         title: "Oops...",
         text: "Algo salio mal",
+        confirmButtonColor:"#0f172a",
         showConfirmButton: true,
       });
     },
@@ -80,9 +81,9 @@ export default {
       this.$swal({
         title: "¿Estás seguro de hacerlo?",
         text: "No podrás revertirlo!",
-        icon: "warning",
+        icon: "error",
         showCancelButton: true,
-        confirmButtonColor: "#FC6C4C",
+        confirmButtonColor: "red",
         cancelButtonColor: "#a2a2a2",
         confirmButtonText: "Sí, quiero borrarlo!",
       })

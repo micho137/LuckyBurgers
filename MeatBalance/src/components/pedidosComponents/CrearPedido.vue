@@ -45,19 +45,6 @@
                 item-title="nombreProducto"
                 item-value="[nombreProducto, precio]"
               ></v-autocomplete>
-
-              <div class="d-flex flex-column justify-center">
-                <v-autocomplete
-                  color="newSecondayBlue"
-                  v-model="select"
-                  :items="Productos"
-                  item-value="[precio, nombreProducto, uid]"
-                  item-title="precio"
-                  label="Precio por unidad"
-                  disabled
-                  return-object
-                ></v-autocomplete>
-              </div>
             </div>
 
             <div class="d-flex justify-center">

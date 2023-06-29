@@ -1,11 +1,10 @@
 <template>
-  <v-table fixed-header height="63vh" class="text-center overflow-auto">
+  <v-table fixed-header height="70vh" class="text-center overflow-y-hidden">
     <thead>
       <tr>
         <th class="text-center text-button">Producto</th>
         <th class="text-center text-button">Descripcion</th>
         <th class="text-center text-button">Categoria</th>
-        <!-- <th class="text-center text-button">Tipo Producto</th> -->
         <th class="text-center text-button">Precio</th>
         <th class="text-center text-button">Accion</th>
       </tr>
@@ -16,7 +15,6 @@
           nombreProducto,
           descripcionProducto,
           categoria,
-          /* tipoProducto, */
           precio,
           uid,
         } in Productos"
@@ -25,7 +23,6 @@
         <td>{{ nombreProducto }}</td>
         <td>{{ descripcionProducto }}</td>
         <td>{{ categoria.nombreCategoria }}</td>
-        <!-- <td>{{ tipoProducto }}</td> -->
         <td>${{ precio }}</td>
         <td>
           <div class="d-flex justify-center">
@@ -37,7 +34,6 @@
                   nombreProducto,
                   descripcionProducto,
                   categoria,
-                  /* tipoProducto, */
                   precio,
                   uid
                 )

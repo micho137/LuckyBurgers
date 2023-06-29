@@ -4,7 +4,7 @@
       <v-row>
         <v-col>
           <v-sheet
-            min-height="70vh"
+            height="70vh"
             rounded="lg"
             class="pa-5 d-flex justify-center align-center"
           >
@@ -20,7 +20,6 @@
                     <v-sheet>
                       <v-table
                         fixed-header
-                        height="500px"
                         class="border rounded-lg"
                       >
                         <thead>

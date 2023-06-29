@@ -1,93 +1,24 @@
 <template>
-  <v-form ref="form" class="mt-10" v-model="valid" lazy-validation>
+  <v-form ref="form" class="" v-model="valid" lazy-validation>
     <v-container>
       <v-row class="d-flex flex-column align-center">
         <v-col cols="12" md="4">
-          <v-text-field
-            v-model="nombreProducto"
-            :rules="nameRules"
-            color="comoNaranja"
-            label="Nombre del producto"
-            required
-          ></v-text-field>
-        </v-col>
-
-        <v-col cols="12" md="4">
-          <v-text-field
-            v-model="descripcion"
-            color="comoNaranja"
-            :rules="descripcionRules"
-            label="Descripcion"
-            required
-          ></v-text-field>
-        </v-col>
-
-        <v-col cols="12" md="4">
-          <v-text-field
-            v-model="precio"
-            color="comoNaranja"
-            :rules="precioRules"
-            label="Precio"
-            prefix="$"
-            required
-          ></v-text-field>
-        </v-col>
-
-        <v-col cols="12" md="4">
-          <v-select
-            v-model="categoriaProducto"
-            color="comoNaranja"
-            :rules="precioRules"
-            item-value="uid"
-            item-title="nombreCategoria"
-            :items="Category"
-            label="Categoria"
-            required
-          >
+          <v-text-field v-model="nombreProducto" :rules="nameRules" color="newSecondayBlue" label="Nombre del producto"
+            required></v-text-field>
+          <v-text-field v-model="descripcion" color="newSecondayBlue" :rules="descripcionRules" label="Descripcion"
+            required></v-text-field>
+          <v-text-field v-model="precio" color="newSecondayBlue" :rules="precioRules" label="Precio" prefix="$"
+            required></v-text-field>
+          <v-select v-model="categoriaProducto" color="newSecondayBlue" :rules="precioRules" item-value="uid"
+            item-title="nombreCategoria" :items="Category" label="Categoria" required>
           </v-select>
         </v-col>
-
-        <!-- <v-col cols="12" md="4">
-          <v-select
-            color="comoNaranja"
-            v-model="tipoProducto"
-            :rules="tipoRules"
-            :items="tProducto"
-            label="Tipo de Producto"
-            required
-          >
-          </v-select>
-        </v-col> -->
-
-        <!-- <v-col cols="12" md="4" class="">
-          <v-file-input
-            persistent-hint
-            hint="Formatos permitidos: .png .jpeg .bmp"
-            accept="image/png, image/jpeg, image/bmp"
-            label="Seleccione la imagen del producto"
-            v-model="archivo"
-            @change="selectImage"
-            v-on:click:clear="imageClear"
-          ></v-file-input>
-        </v-col>
-
-        <v-col cols="12" md="4" class="">
-          <v-img
-            max-height="200px"
-            lazy-src="https://res.cloudinary.com/djdxi88e0/image/upload/v1670184495/meatbalance_lqntpv.png"
-            :src="
-              archivo
-                ? archivoPreview
-                : 'https://res.cloudinary.com/djdxi88e0/image/upload/v1670184495/meatbalance_lqntpv.png'
-            "
-          ></v-img>
-        </v-col> -->
       </v-row>
       <div class="d-flex justify-center mt-6">
-        <v-btn color="comoNaranja" class="mr-4" @click="validate">
+        <v-btn color="newSecondayBlue" class="mr-4" @click="validate">
           Registrar
         </v-btn>
-        <v-btn color="grey" class="mr-4" @click="reset"> Reset Form </v-btn>
+        <v-btn color="red" class="mr-4" @click="reset"> Reset Form </v-btn>
       </div>
     </v-container>
   </v-form>
@@ -150,13 +81,13 @@ export default {
         data.append("categoria", this.categoriaProducto);
         data.append("tipoProducto",this.tipoProducto) */
         await axios
-        /* .post("http://localhost:4000/crear/productos", data, {
-            headers: {
-              "accept": "application/json",
-              "Content-Type": `multipart/form-data`,
-            },
-          }) */
-          .post(devRuta+"/crear/productos", data)
+          /* .post("http://localhost:4000/crear/productos", data, {
+              headers: {
+                "accept": "application/json",
+                "Content-Type": `multipart/form-data`,
+              },
+            }) */
+          .post(devRuta + "/crear/productos", data)
           .then((response) => {
             this.showRegisterAlert();
             this.reset();
@@ -184,7 +115,7 @@ export default {
     }, */
     getCategorias() {
       axios
-        .get(devRuta+"/categorias")
+        .get(devRuta + "/categorias")
         .then((response) => {
           this.Category = response.data["resp"][1].map((obj) => {
             return {

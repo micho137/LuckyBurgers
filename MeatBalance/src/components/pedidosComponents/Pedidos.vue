@@ -20,7 +20,7 @@
         </v-col>
 
         <v-col>
-          <v-sheet height="70vh" rounded="lg" class="pa-5" color="newPrimaryBlue">
+          <v-sheet height="70vh" rounded="lg" class="d-flex flex-column pa-5" color="newPrimaryBlue">
             <!--  -->
             <keep-alive>
               <component :is="current"></component>
