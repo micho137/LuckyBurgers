@@ -10,6 +10,7 @@ import CompraInsumo from '../components/monetariosComponents/Insumo/compraInsumo
 import GenerarEgreso from '../components/monetariosComponents/Egreso/generarEgreso.vue'
 import Balance from '../components/monetariosComponents/Balance/Balance.vue'
 import EditarPedido from '../components/pedidosComponents/EditarPedido.vue'
+import CajaFuerte from '../components/caseComponents/Case.vue'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -60,7 +61,11 @@ const router = createRouter({
             name: 'Balance',
             component: Balance
         },
-
+        {
+            path:'/CajaFuerte',
+            name:'CajaFuerte',
+            component:CajaFuerte
+        }
     ]
 })
 

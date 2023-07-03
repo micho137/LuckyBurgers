@@ -25,7 +25,6 @@
 </template>
 
 <script>
-import FormData from "form-data";
 import axios from "axios";
 const devRuta = import.meta.env.VITE_APP_RUTA_API
 export default {
@@ -37,8 +36,6 @@ export default {
     nombreProducto: "",
     descripcion: "",
     precio: "",
-    //archivoPreview: "",
-    /* tipoProducto: "", */
     valid: true,
     nameRules: [(v) => !!v || "El nombre es requerido"],
     tipoRules: [(v) => !!v || "El tipo de producto es requerido"],

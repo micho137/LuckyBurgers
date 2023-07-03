@@ -142,7 +142,6 @@ export default {
         confirmButtonText: "Editar",
         confirmButtonColor: "#FC6C4C",
         preConfirm: () => {
-          console.log(document.getElementById("swal-input3").value);
           if (
             document.getElementById("swal-input1").value === "" ||
             document.getElementById("swal-input2").value === "" ||
