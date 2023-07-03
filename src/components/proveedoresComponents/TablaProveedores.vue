@@ -186,6 +186,9 @@ export default {
   },
   mounted() {
     this.getProveedores();
+    setInterval(() => {
+      this.getProveedores()
+    }, 5000);
   },
 };
 </script>

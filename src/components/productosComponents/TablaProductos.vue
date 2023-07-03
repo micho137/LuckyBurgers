@@ -213,6 +213,10 @@ export default {
   mounted() {
     this.getProductos();
     this.getCategorias();
+    setInterval(() => {
+      this.getProductos()
+      this.getCategorias()
+    }, 5000);
   },
 };
 </script>

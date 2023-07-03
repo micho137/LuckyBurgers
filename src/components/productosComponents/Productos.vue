@@ -48,13 +48,7 @@ export default {
   methods: {
     changeCurrent(component) {
       this.current = component;
-      if(component==="TablaProductosVue"){
-        this.reload()
-      }
     },
-    reload(){
-      this.$router.go()
-    }
   },
   components: {
     TablaProductosVue,

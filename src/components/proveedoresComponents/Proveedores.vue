@@ -46,12 +46,6 @@ export default {
   methods: {
     changeCurrent(component) {
       this.current = component;
-      if(component==="TablaProveedoresVue"){
-        this.reload()
-      }
-    },
-    reload(){
-      this.$router.go()
     }
   },
   components: {
