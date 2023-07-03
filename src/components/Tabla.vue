@@ -11,16 +11,13 @@
       </tr>
     </thead>
     <tbody>
-      <tr
-        v-for="{
-          descripcionIngreso,
-          uid,
-          venta,
-          totalIngreso,
-          fechaIngreso,
-        } in Pedidos"
-        :key="uid"
-      >
+      <tr v-for="{
+        descripcionIngreso,
+        uid,
+        venta,
+        totalIngreso,
+        fechaIngreso,
+      } in Pedidos" :key="uid">
         <td>{{ descripcionIngreso }}</td>
         <td>{{ venta.tipoPedido }}</td>
         <td>{{ venta.mesa }}</td>
@@ -53,7 +50,7 @@ export default {
   methods: {
     getPedidos() {
       axios
-        .get(devRuta+"/obtenerPedidos")
+        .get(devRuta + "/obtenerPedidos")
         .then((response) => {
           this.Pedidos = response.data["ingresos"];
         })
@@ -61,7 +58,7 @@ export default {
     },
     async deletePedido(uid) {
       await axios
-        .delete(devRuta+"/borrarPedido/" + uid)
+        .delete(devRuta + "/borrarPedido/" + uid)
         .then(() => this.getPedidos())
         .catch((t) => this.failed());
     },
@@ -70,7 +67,7 @@ export default {
         icon: "error",
         title: "Oops...",
         text: "Algo salio mal",
-        confirmButtonColor:"#0f172a",
+        confirmButtonColor: "#0f172a",
         showConfirmButton: true,
       });
     },
@@ -100,6 +97,9 @@ export default {
   },
   mounted() {
     this.getPedidos();
+    setInterval(() => {
+      this.getPedidos();
+    }, 5000);
   },
 };
 </script>

@@ -46,13 +46,13 @@ export default {
   methods: {
     changeCurrent(component) {
       this.current = component;
-      if (component === "TablaVue") {
+      /* if (component === "TablaVue") {
         this.reload();
-      }
+      } */
     },
-    reload() {
+    /* reload() {
       this.$router.go()
-    },
+    }, */
   },
   components: {
     TablaVue,
