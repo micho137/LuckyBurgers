@@ -86,8 +86,8 @@ export default {
         text: "No podrás revertirlo!",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#FC6C4C",
-        cancelButtonColor: "#a2a2a2",
+        confirmButtonColor: "#3abff8",
+        cancelButtonColor:"red",
         confirmButtonText: "Sí, quiero borrarlo!",
       }).then((result) => {
         if (result.isConfirmed) {
@@ -142,7 +142,8 @@ export default {
         showCancelButton: true,
         focusConfirm: false,
         confirmButtonText: "Editar",
-        confirmButtonColor: "#FC6C4C",
+        confirmButtonColor: "#3abff8",
+        cancelButtonColor:"red",
         preConfirm: () => {
           if (
             document.getElementById("swal-input1").value === "" ||
