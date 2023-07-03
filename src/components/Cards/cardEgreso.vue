@@ -14,7 +14,7 @@
       </v-card-subtitle>
   
       <v-card-actions>
-        <v-btn @click="redirect" color="orange-lighten-2 border" variant="text"> Ingresar </v-btn>
+        <v-btn @click="redirect" color="white border bg-blue" variant="text"> Ingresar </v-btn>
   
         <v-spacer></v-spacer>
   

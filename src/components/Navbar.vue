@@ -1,6 +1,5 @@
 <template>
-  <v-container class="fill-height d-flex align-center bg-newPrimaryBlue">
-    <!-- <v-avatar class="mr-10 ml-4" color="grey-darken-1" size="32"></v-avatar> -->
+  <v-container v-if="onExit" class="fill-height d-flex align-center bg-newPrimaryBlue">
     <v-img
       contain
       lazy-src="https://res.cloudinary.com/djdxi88e0/image/upload/v1687549212/login_logo_mfrg0n.svg"

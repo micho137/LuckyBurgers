@@ -13,62 +13,66 @@ import EditarPedido from '../components/pedidosComponents/EditarPedido.vue'
 
 const router = createRouter({
     history: createWebHistory(),
-    routes:[
+    routes: [
         {
-            path:'/',
-            name:'Login',
-            component:Login
+            path: '/',
+            name: 'Login',
+            component: Login
         },
         {
-            path:'/Pedidos',
-            name:'Pedidos',
-            component:Pedidos
+            path: '/Pedidos',
+            name: 'Pedidos',
+            component: Pedidos
         },
         {
-            path:'/EditarPedido/:id',
-            name:'EditarPedido',
-            component:EditarPedido,
-            props:true
+            path: '/EditarPedido/:id',
+            name: 'EditarPedido',
+            component: EditarPedido,
+            props: true
         },
         {
-            path:'/Proveedores',
-            name:'Proveedores',
-            component:Proveedores
+            path: '/Proveedores',
+            name: 'Proveedores',
+            component: Proveedores
         },
         {
-            path:'/Productos',
-            name:'Productos',
-            component:Productos
+            path: '/Productos',
+            name: 'Productos',
+            component: Productos
         },
         {
-            path:'/Monetarios',
-            name:'Monetarios',
-            component:Monetarios
+            path: '/Monetarios',
+            name: 'Monetarios',
+            component: Monetarios
         },
         {
-            path:'/CompraInsumo',
-            name:'CompraInsumo',
-            component:CompraInsumo
+            path: '/CompraInsumo',
+            name: 'CompraInsumo',
+            component: CompraInsumo
         },
         {
-            path:'/GenerarEgreso',
-            name:'GenerarEgreso',
-            component:GenerarEgreso
+            path: '/GenerarEgreso',
+            name: 'GenerarEgreso',
+            component: GenerarEgreso
         },
         {
-            path:'/Balance',
-            name:'Balance',
-            component:Balance
+            path: '/Balance',
+            name: 'Balance',
+            component: Balance
         },
-        
+
     ]
 })
 
-router.beforeEach((to)=>{
+router.beforeEach((to) => {
     const store = useLoginStore()
     const publicPage = ['/']
     const authRequire = !publicPage.includes(to.path)
     if (authRequire && !store.authUser) return '/'
-}) 
+
+    if (to.path === '/' && store.authUser) {
+        return ('/Pedidos');
+    }
+})
 
 export default router

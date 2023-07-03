@@ -4,19 +4,19 @@
       <v-row>
         <v-col>
           <v-sheet
-            min-height="70vh"
-            max-height=""
+            height="70vh"
             rounded="lg"
+            color="newPrimaryBlue"
             class="pa-5 d-flex justify-center align-center"
           >
             <v-col>
-              <v-sheet>
+              <v-sheet color="newPrimaryBlue">
                 <v-form ref="form" v-model="valid" lazy-validation class="">
                   <div class="d-flex flex-column">
                     <v-autocomplete
                       transition="scroll-x-transition"
                       v-model="select"
-                      color="comoNaranja"
+                      color="newSecondayBlue"
                       :items="Productos"
                       item-value="[nombreProducto, uid]"
                       item-title="nombreProducto"
@@ -28,7 +28,7 @@
 
                     <v-text-field
                       v-model="number"
-                      color="comoNaranja"
+                      color="newSecondayBlue"
                       :rules="numberRules"
                       label="Cantidad"
                       required
@@ -38,7 +38,7 @@
 
                     <v-text-field
                       v-model="precioCompra"
-                      color="comoNaranja"
+                      color="newSecondayBlue"
                       :rules="compraRules"
                       label="Precio de Compra"
                       required
@@ -50,7 +50,7 @@
                     <v-autocomplete
                       transition="scroll-x-transition"
                       v-model="selectProveedor"
-                      color="comoNaranja"
+                      color="newSecondayBlue"
                       :items="Proveedores"
                       item-value="[nombreProveedor, uidProveedor]"
                       item-title="nombreProveedor"
@@ -62,15 +62,15 @@
                   </div>
 
                   <div class="mt-4 d-flex justify-center">
-                    <v-btn class="mr-2" color="comoNaranja" @click="add">
+                    <v-btn class="mr-2" color="newSecondayBlue" @click="add">
                       Agregar
                     </v-btn>
 
-                    <v-btn class="mr-2" color="grisButton" @click="reset">
+                    <v-btn class="mr-2" color="red" @click="reset">
                       Limpiar
                     </v-btn>
 
-                    <v-btn @click="getBack" color="danger"> Cancelar </v-btn>
+                    <v-btn @click="getBack" class="text-black"> Cancelar </v-btn>
                   </div>
                 </v-form>
               </v-sheet>
@@ -94,10 +94,10 @@
                 class="d-flex justify-space-around border rounded-lg pa-2 mt-4"
               >
                 <div v-if="onSuccess" class="d-flex">
-                  <v-btn color="comoNaranja" class="mr-4" @click="validate()">
+                  <v-btn color="newSecondayBlue" class="mr-4" @click="validate()">
                     Registrar Compra
                   </v-btn>
-                  <v-btn @click="cleanTable" color="grisButton">
+                  <v-btn @click="cleanTable" color="red">
                     Limpiar Tabla
                   </v-btn>
                 </div>

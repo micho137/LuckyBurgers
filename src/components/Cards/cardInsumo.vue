@@ -1,8 +1,8 @@
 <template>
   <v-card class="mx-auto" max-width="450" min-width="450">
     <v-img
-      lazy-src="https://res.cloudinary.com/djdxi88e0/image/upload/v1687549212/login_logo_mfrg0n.svg"
-      src="https://res.cloudinary.com/djdxi88e0/image/upload/v1687549212/login_logo_mfrg0n.svg"
+      lazy-src="https://res.cloudinary.com/djdxi88e0/image/upload/v1687549212/logo_nnbssa.svg"
+      src="https://res.cloudinary.com/djdxi88e0/image/upload/v1687549212/logo_nnbssa.svg"
       height="200px"
       cover
     ></v-img>
@@ -14,7 +14,7 @@
     </v-card-subtitle>
 
     <v-card-actions>
-      <v-btn @click="redirect" color="orange-lighten-2 border" variant="text"> Ingresar </v-btn>
+      <v-btn @click="redirect" color="white border bg-red" variant="text"> Ingresar </v-btn>
 
       <v-spacer></v-spacer>
 

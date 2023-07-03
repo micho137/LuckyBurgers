@@ -4,8 +4,9 @@
       <v-row>
         <v-col>
           <v-sheet
-            min-height="70vh"
+            height="70vh"
             rounded="lg"
+            color="newPrimaryBlue"
             class="pa-5 justify-center align-center d-flex flex-column"
           >
             <table-insumo class="pa-5" />
@@ -13,7 +14,8 @@
         </v-col>
         <v-col>
           <v-sheet
-            min-height="70vh"
+            height="70vh"
+            color="newPrimaryBlue"
             rounded="lg"
             class="pa-5 justify-center align-center d-flex flex-column"
           >

@@ -1,8 +1,8 @@
 <template>
-  <v-sheet class="text-button font-weight-bold">
+  <v-sheet color="newPrimaryBlue" class="text-button font-weight-bold">
     Total de Ingresos: ${{ calcInsumo() }}
   </v-sheet>
-  <v-table fixed-header height="500px" class="border rounded-lg">
+  <v-table fixed-header height="60vh" class="border rounded-lg">
     <thead>
       <tr>
         <th class="text-center text-button">Total</th>

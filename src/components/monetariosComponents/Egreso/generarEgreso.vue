@@ -1,13 +1,13 @@
 <template>
   <v-main class="h-100">
     <v-container>
-      <v-sheet min-height="70vh" max-height="" rounded="lg" class="pa-5">
+      <v-sheet height="70vh" rounded="lg" color="newPrimaryBlue">
         <v-col>
-          <v-form ref="form" v-model="valid" lazy-validation class="d-flex flex-column align-center mt-10">
+          <v-form ref="form" v-model="valid" lazy-validation class="d-flex flex-column align-center mt-5">
             <v-col md="5">
               <v-text-field
                 v-model="monto"
-                color="comoNaranja"
+                color="newSecondayBlue"
                 :rules="valorRules"
                 label="Monto"
                 type="number"
@@ -17,8 +17,8 @@
             </v-col>
             <v-col md="5">
               <v-textarea
-                no-resize=""
-                color="comoNaranja"
+                no-resize
+                color="newSecondayBlue"
                 v-model="descripcion"
                 :rules="descripcionRules"
                 label="Descripcion"
@@ -27,13 +27,13 @@
               </v-textarea>
             </v-col>
             <div class="d-flex justify-center mt-6">
-              <v-btn color="comoNaranja" class="mr-4" @click="validate">
+              <v-btn color="newSecondayBlue" class="mr-4" @click="validate">
                 Registrar
               </v-btn>
-              <v-btn color="grey" class="mr-4" @click="reset">
+              <v-btn color="red" class="mr-4" @click="reset">
                 Reset Form
               </v-btn>
-              <v-btn color="danger" class="mr-4" @click="getBack">
+              <v-btn class="mr-4 text-black" @click="getBack">
                 Cancelar
               </v-btn>
             </div>
