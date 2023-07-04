@@ -14,12 +14,12 @@
                 <v-form ref="form" v-model="valid" lazy-validation class="">
                   <div class="d-flex flex-column">
                     <v-autocomplete
-                      transition="scroll-x-transition"
+                      transition="scroll-y-transition"
                       v-model="select"
                       color="newSecondayBlue"
                       :items="Productos"
-                      item-value="[nombreProducto, uid]"
-                      item-title="nombreProducto"
+                      item-value="[insumo, uid]"
+                      item-title="insumo"
                       label="Selecionar Producto"
                       :rules="[(v) => !!v || 'El producto es requerido']"
                       required
@@ -206,7 +206,7 @@ export default {
     },
     getProductos() {
       axios
-        .get(devRuta+"/productos")
+        .get(devRuta+"/inventarios")
         .then((response) => {
           this.Productos = response.data["resp"][1];
         })
@@ -231,7 +231,7 @@ export default {
           this.existingId();
         } else {
           this.proveedores.push({
-            producto: this.select.nombreProducto,
+            producto: this.select.insumo,
             cantidad: this.number,
             precioCompra: this.precioCompra * this.number,
             uid: this.select.uid,

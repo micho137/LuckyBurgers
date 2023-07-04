@@ -1,5 +1,5 @@
 <template>
-  <v-table fixed-header height="50vh" class="border rounded-lg">
+  <v-table fixed-header height="50vh" class="rounded-lg">
     <thead>
       <tr>
         <th class="text-center text-button">Producto</th>
@@ -27,7 +27,7 @@
         </td>
         <td v-else>Sin Descripción</td>
 
-        <td>{{ getAdicionesNombres(adicion) }}</td>
+        <td>{{ getAdicionesNombres(adicion) || 'Sin Adición' }}</td>
 
         <td>${{ precio }}</td>
         <td>

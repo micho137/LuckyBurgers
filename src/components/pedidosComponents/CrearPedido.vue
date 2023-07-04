@@ -5,46 +5,19 @@
         <v-sheet color="newPrimaryBlue">
           <v-form ref="form" v-model="valid" lazy-validation class="">
             <div class="d-flex flex-column">
-              <v-autocomplete
-                color="newSecondayBlue"
-                v-model="select"
-                :items="Productos"
-                item-value="[precio, nombreProducto, uid]"
-                item-title="nombreProducto"
-                label="Selecionar Producto"
-                :rules="[(v) => !!v || 'El producto es requerido']"
-                required
-                return-object
-              ></v-autocomplete>
+              <v-autocomplete color="newSecondayBlue" v-model="select" :items="Productos"
+                item-value="[precio, nombreProducto, uid]" item-title="nombreProducto" label="Selecionar Producto"
+                :rules="[(v) => !!v || 'El producto es requerido']" required return-object></v-autocomplete>
 
-              <v-text-field
-                color="newSecondayBlue"
-                v-model="number"
-                :rules="numberRules"
-                label="Cantidad"
-                required
-                min="1"
-                type="number"
-              ></v-text-field>
+              <v-text-field color="newSecondayBlue" v-model="number" :rules="numberRules" label="Cantidad" required
+                min="1" type="number"></v-text-field>
 
-              <v-autocomplete
-                multiple
-                color="newSecondayBlue"
-                v-model="descripcionP"
-                :items="descripcion"
-                label="Agregar descripcion"
-              ></v-autocomplete>
+              <v-autocomplete multiple color="newSecondayBlue" v-model="descripcionP" :items="descripcion"
+                label="Agregar descripcion"></v-autocomplete>
 
-              <v-autocomplete
-                multiple
-                color="newSecondayBlue"
-                v-model="adiciones"
-                :items="Adicion"
-                label="Agregar adicion"
-                return-object
-                item-title="nombreProducto"
-                item-value="[nombreProducto, precio]"
-              ></v-autocomplete>
+              <v-autocomplete multiple color="newSecondayBlue" v-model="adiciones" :items="Adicion"
+                label="Agregar adicion" return-object item-title="nombreProducto"
+                item-value="[nombreProducto, precio]"></v-autocomplete>
             </div>
 
             <div class="d-flex justify-center">
@@ -63,9 +36,7 @@
           <tabla-vue :onDeletes="deletes" :Productos="pedidos" />
         </v-sheet>
         <!-- ESPACIO -->
-        <v-col
-          class="d-flex justify-space-around border bg-white rounded-lg pa-2 mt-4"
-        >
+        <v-col class="d-flex justify-space-around border bg-white rounded-lg pa-2 mt-4">
           <div v-if="onSuccess" class="d-flex">
             <v-btn color="newSecondayBlue" class="mr-4" @click="prueba()">
               Enviar Pedido
@@ -89,22 +60,11 @@ import TablaVue from "../pedidosComponents/TablaPedido.vue";
 const devRuta = import.meta.env.VITE_APP_RUTA_API;
 export default {
   computed: {
-    /* getTotal() {
+    getTotal() {
       let total = 0;
       this.pedidos.forEach((e) => {
         total += e.precio
       });
-      return total;
-    }, */
-    getTotal() {
-      let total = 0;
-
-      this.pedidos.forEach((pedido) => {
-        const precioPedido = pedido.precio;
-        const precioAdicion = pedido.adicion[1] ? pedido.adicion[1].precio : 0;
-        total += precioPedido + precioAdicion;
-      });
-      console.log(total);
       return total;
     },
   },
@@ -218,22 +178,22 @@ export default {
       });
     },
     async validate(value, table) {
-      const primerObjeto =[ {
+      const primerObjeto = [{
         mesa: table,
         tipoPedido: value,
         totalpedido: this.getTotal,
       }];
       const segundoObjeto = this.pedidos.map((pedido) => {
-        const descripcionFiltrada = pedido.descripcion.filter(Boolean); // Eliminar elementos vacíos en descripcion
+        const descripcionFiltrada = pedido.descripcion.filter(Boolean);
         const adicionesNombres = pedido.adicion
-          ? pedido.adicion.map((adic) => adic.nombreProducto) // Obtener solo los nombres de las adiciones
+          ? pedido.adicion.map((adic) => adic.nombreProducto)
           : [];
         adicionesNombres.shift();
         return {
           producto: pedido.uid,
           cantidad: pedido.cantidad,
           descripcion:
-            descripcionFiltrada.length > 0 ? descripcionFiltrada : [], // Obtener el primer elemento filtrado o cadena vacía
+            descripcionFiltrada.length > 0 ? descripcionFiltrada : [],
           adiciones: adicionesNombres.length > 0 ? adicionesNombres : [],
           precioDetalle: pedido.precio,
         };
@@ -271,16 +231,26 @@ export default {
     async add() {
       const { valid } = await this.$refs.form.validate();
       if (valid) {
+        let precioTotal = 0;
+        const precioProducto = this.select.precio * this.number;
+        precioTotal += precioProducto;
+        if (this.adiciones && this.adiciones.length > 0) {
+          const precioAdiciones = this.adiciones.reduce(
+            (total, adicion) => total + adicion.precio,
+            0
+          );
+          precioTotal += precioAdiciones * this.number;
+        }
+
         this.pedidos.push({
           producto: this.select.nombreProducto,
           cantidad: this.number,
-          precio:
-            this.select.precio * this.number +
-            (this.Adicion[0].precio * this.number),
+          precio: precioTotal,
           descripcion: this.descripcionP,
           adicion: this.adiciones,
           uid: this.select.uid,
         });
+
         this.reset();
         this.activate();
       }

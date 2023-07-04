@@ -1,5 +1,5 @@
 <template>
-  <v-table fixed-header height="70vh" class="text-center overflow-y-hidden">
+  <v-table fixed-header height="63vh" class="text-center">
     <thead>
       <tr>
         <th class="text-center text-button">Producto</th>
@@ -77,7 +77,7 @@ export default {
     },
     getProductos() {
       axios
-        .get(devRuta + "/productos")
+        .get(devRuta + "/todosProductos")
         .then((response) => {
           this.Productos = response.data["resp"][1];
         })

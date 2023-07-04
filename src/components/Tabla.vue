@@ -1,5 +1,5 @@
 <template>
-  <v-table fixed-header height="auto" class="text-center">
+  <v-table fixed-header height="63vh" class="text-center">
     <thead>
       <tr>
         <th class="text-center text-button">Descripcion</th>
