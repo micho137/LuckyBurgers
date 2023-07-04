@@ -124,7 +124,7 @@ export default {
     getTotal() {
       let total = 0;
       this.proveedores.forEach((e) => {
-        total += e.precioCompra;
+        total += e.precio;
       });
       return total;
     },
@@ -233,7 +233,8 @@ export default {
           this.proveedores.push({
             producto: this.select.insumo,
             cantidad: this.number,
-            precioCompra: this.precioCompra * this.number,
+            precio: this.precioCompra * this.number,
+            precioCompra:this.precioCompra,
             uid: this.select.uid,
             proveedor: this.selectProveedor.nombreProveedor,
             uidProveedor: this.selectProveedor.uidProveedor,

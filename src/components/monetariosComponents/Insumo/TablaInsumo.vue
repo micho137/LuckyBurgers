@@ -10,13 +10,13 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="{ producto, cantidad, precioCompra, proveedor, uid, uidProveedor } in Proveedores" :key="uid"
+      <tr v-for="{ producto, cantidad, precio, proveedor, uid, uidProveedor } in Proveedores" :key="uid"
         class="text-center">
         <td>{{ producto }}</td>
 
         <td>{{ cantidad }}</td>
 
-        <td>${{ precioCompra }}</td>
+        <td>${{ precio }}</td>
 
         <td>{{ proveedor }}</td>
         <td>
